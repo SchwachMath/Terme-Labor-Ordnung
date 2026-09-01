@@ -45,14 +45,12 @@ h1 {
 ===================================================== */
 
 .card,
-.result-card,
 .explanation {
     background: white;
     border: 1px solid #e5e7eb;
     border-radius: 20px;
     padding: 25px;
     margin-top: 20px;
-
     overflow: visible;
     min-width: 0;
 }
@@ -67,15 +65,10 @@ h1 {
     align-items: center;
     gap: 15px;
     flex-wrap: wrap;
-
     background: white;
-
     padding: 15px 20px;
-
     border-radius: 16px;
-
     border: 1px solid #e5e7eb;
-
     margin-top: 20px;
 }
 
@@ -87,15 +80,10 @@ h1 {
 .diff {
     width: 42px;
     height: 10px;
-
     padding: 0;
-
     border: 0;
-
     border-radius: 20px;
-
     background: #d1d5db;
-
     cursor: pointer;
 }
 
@@ -116,25 +104,17 @@ h1 {
 .step-indicator {
     display: flex;
     justify-content: center;
-
     gap: 8px;
-
     margin: 20px 0;
-
     flex-wrap: wrap;
 }
 
 .step {
     padding: 8px 14px;
-
     border-radius: 20px;
-
     background: #eceef2;
-
     color: #7b8190;
-
     font-size: 13px;
-
     font-weight: bold;
 }
 
@@ -156,51 +136,61 @@ h1 {
 .task-header {
     display: flex;
     justify-content: space-between;
-
     color: #6b7280;
-
     font-size: 14px;
-
     font-weight: bold;
-
     margin-bottom: 8px;
 }
 
-
-/*
-   WICHTIG:
-   Keine feste Höhe!
-   Der komplette Term darf umbrechen.
-*/
-
 .task {
     width: 100%;
-
     text-align: center;
-
     font-size: 32px;
-
     font-weight: bold;
-
     padding: 20px 10px;
-
     line-height: 1.5;
-
     min-height: 82px;
-
     height: auto;
-
     white-space: normal;
-
     overflow: visible;
-
     overflow-wrap: anywhere;
-
-    word-break: break-word;
-
+    word-break: normal;
     min-width: 0;
-
     display: block;
+}
+
+
+/* =====================================================
+   GELÖSTE AUFGABE
+===================================================== */
+
+.task-original {
+    display: block;
+    width: 100%;
+}
+
+.task-solution {
+    display: none;
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid #e5e7eb;
+}
+
+.task.solved .task-solution {
+    display: block;
+}
+
+.solution-equals {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 28px;
+    color: #6b7280;
+}
+
+.solution-expression {
+    display: inline;
+    color: #15803d;
 }
 
 
@@ -210,19 +200,14 @@ h1 {
 
 .step-title {
     text-align: center;
-
     font-size: 22px;
-
     font-weight: bold;
-
     margin-top: 10px;
 }
 
 .step-description {
     text-align: center;
-
     color: #6b7280;
-
     margin: 8px 0 20px;
 }
 
@@ -233,43 +218,26 @@ h1 {
 
 .term-pool {
     min-height: 120px;
-
     border: 2px dashed #d1d5db;
-
     background: #f8fafc;
-
     border-radius: 18px;
-
     padding: 18px;
-
     display: flex;
-
     flex-wrap: wrap;
-
     gap: 12px;
-
     justify-content: center;
-
     align-items: center;
-
     transition: .2s;
-
     position: relative;
-
     min-width: 0;
 }
 
 .pool-label {
     width: 100%;
-
     text-align: center;
-
     color: #9ca3af;
-
     font-size: 13px;
-
     font-weight: bold;
-
     pointer-events: none;
 }
 
@@ -280,35 +248,24 @@ h1 {
 
 .drop-zones {
     display: grid;
-
     grid-template-columns:
         repeat(
             auto-fit,
             minmax(210px, 1fr)
         );
-
     gap: 15px;
-
     margin-top: 20px;
-
     min-width: 0;
 }
 
 .drop-zone {
     min-height: 210px;
-
     border-radius: 18px;
-
     padding: 15px;
-
     display: flex;
-
     flex-direction: column;
-
     position: relative;
-
     overflow: hidden;
-
     transition:
         transform .15s,
         box-shadow .15s;
@@ -316,20 +273,15 @@ h1 {
 
 
 /* =====================================================
-   SCHWARZER HOVER-EFFEKT
+   HOVER
 ===================================================== */
 
 .drop-zone::after {
     content: "";
-
     position: absolute;
-
     inset: 0;
-
     background: rgba(0, 0, 0, 0);
-
     pointer-events: none;
-
     transition: background .15s;
 }
 
@@ -339,7 +291,6 @@ h1 {
 
 .drop-zone > * {
     position: relative;
-
     z-index: 2;
 }
 
@@ -350,62 +301,45 @@ h1 {
 
 .zone-x {
     background: #eff6ff;
-
     border: 2px dashed #60a5fa;
 }
 
 .zone-y {
     background: #f0fdf4;
-
     border: 2px dashed #4ade80;
 }
 
 .zone-xy {
     background: #faf5ff;
-
     border: 2px dashed #c084fc;
 }
 
 .zone-num {
     background: #fffbeb;
-
     border: 2px dashed #facc15;
 }
 
-
 .zone-content {
     flex: 1;
-
     display: flex;
-
     flex-wrap: wrap;
-
     gap: 10px;
-
     align-content: flex-start;
-
     justify-content: center;
-
     position: relative;
-
     z-index: 2;
 }
 
 .zone-title {
     text-align: center;
-
     font-size: 17px;
-
     font-weight: bold;
 }
 
 .zone-description {
     text-align: center;
-
     color: #6b7280;
-
     font-size: 13px;
-
     margin: 5px 0 15px;
 }
 
@@ -416,27 +350,16 @@ h1 {
 
 .term {
     min-width: 72px;
-
     min-height: 55px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     padding: 8px 14px;
-
     border-radius: 14px;
-
     font-size: 20px;
-
     font-weight: bold;
-
     cursor: grab;
-
     user-select: none;
-
     transition:
         transform .15s,
         box-shadow .15s,
@@ -447,7 +370,6 @@ h1 {
 
 .term:hover {
     transform: translateY(-2px);
-
     box-shadow:
         0 6px 14px
         rgba(0,0,0,.12);
@@ -460,9 +382,7 @@ h1 {
 
 .term.neutral {
     background: #eceff3;
-
     border: 2px solid #d1d5db;
-
     color: #4b5563;
 }
 
@@ -473,9 +393,7 @@ h1 {
 
 .term.x {
     background: #dbeafe;
-
     border: 2px solid #60a5fa;
-
     color: #1d4ed8;
 }
 
@@ -486,9 +404,7 @@ h1 {
 
 .term.y {
     background: #dcfce7;
-
     border: 2px solid #4ade80;
-
     color: #15803d;
 }
 
@@ -499,9 +415,7 @@ h1 {
 
 .term.xy {
     background: #f3e8ff;
-
     border: 2px solid #c084fc;
-
     color: #7e22ce;
 }
 
@@ -512,9 +426,7 @@ h1 {
 
 .term.num {
     background: #fef3c7;
-
     border: 2px solid #fbbf24;
-
     color: #92400e;
 }
 
@@ -525,7 +437,6 @@ h1 {
 
 .combine-target {
     transform: scale(1.08);
-
     box-shadow:
         0 0 0 4px
         rgba(99,102,241,.2);
@@ -538,23 +449,14 @@ h1 {
 
 .hint {
     min-height: 62px;
-
     margin-top: 18px;
-
     padding: 14px;
-
     border-radius: 14px;
-
     background: #f5f3ff;
-
     color: #6d28d9;
-
     font-weight: bold;
-
     text-align: center;
-
     line-height: 1.5;
-
     display: none;
 }
 
@@ -564,7 +466,6 @@ h1 {
 
 .hint.empty {
     visibility: hidden;
-
     display: block;
 }
 
@@ -575,11 +476,8 @@ h1 {
 
 .feedback {
     min-height: 28px;
-
     text-align: center;
-
     font-weight: bold;
-
     margin-top: 18px;
 }
 
@@ -598,33 +496,23 @@ h1 {
 
 .buttons {
     display: flex;
-
     justify-content: center;
-
     gap: 10px;
-
     flex-wrap: wrap;
-
     margin-top: 20px;
 }
 
 button {
     padding: 11px 18px;
-
     border: 0;
-
     border-radius: 12px;
-
     cursor: pointer;
-
     font-weight: bold;
-
     font-size: 14px;
 }
 
 button.primary {
     background: #202124;
-
     color: white;
 }
 
@@ -640,11 +528,6 @@ button.secondary {
 .order-active {
     border-color: #9ca3af;
 }
-
-
-/*
-   Farben bleiben beim Ordnen erhalten.
-*/
 
 .order-active .term.x {
     background: #dbeafe;
@@ -664,41 +547,6 @@ button.secondary {
 
 
 /* =====================================================
-   ERGEBNIS
-===================================================== */
-
-.result-card {
-    display: none;
-}
-
-.result-title {
-    font-size: 21px;
-
-    font-weight: bold;
-}
-
-.final-result {
-    background: #f8fafc;
-
-    padding: 18px;
-
-    border-radius: 15px;
-
-    text-align: center;
-
-    margin-top: 15px;
-}
-
-.final-value {
-    font-size: 30px;
-
-    font-weight: bold;
-
-    overflow-wrap: anywhere;
-}
-
-
-/* =====================================================
    RESPONSIVE
 ===================================================== */
 
@@ -706,11 +554,12 @@ button.secondary {
 
     .task {
         font-size: 24px;
-
         min-height: 70px;
+        padding: 15px 5px;
+    }
 
-        padding:
-            15px 5px;
+    .solution-equals {
+        font-size: 22px;
     }
 
     .drop-zones {
@@ -718,11 +567,6 @@ button.secondary {
     }
 
 }
-
-
-/* =====================================================
-   SEHR KLEINE BILDSCHIRME
-===================================================== */
 
 @media (max-width: 450px) {
 
@@ -741,8 +585,11 @@ button.secondary {
 
     .task {
         font-size: 21px;
-
         min-height: 60px;
+    }
+
+    .solution-equals {
+        font-size: 20px;
     }
 
 }
@@ -754,7 +601,6 @@ button.secondary {
 <body>
 
 <div class="app">
-
 
 <h1>🧮 Terme-Labor</h1>
 
@@ -943,37 +789,6 @@ Nächste Aufgabe
 
 
 <!-- =====================================================
-     ERGEBNIS
-===================================================== -->
-
-<section
-    id="resultCard"
-    class="result-card">
-
-<div class="result-title">
-
-🎉 Aufgabe geschafft!
-
-</div>
-
-
-<div class="final-result">
-
-<div>
-Der vereinfachte Term lautet:
-</div>
-
-<div
-    id="finalResult"
-    class="final-value">
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
      ERKLÄRUNG
 ===================================================== -->
 
@@ -1008,205 +823,577 @@ dagegen nicht.
 
 
 /* =====================================================
-   AUFGABEN
+   SCHWIERIGKEITEN
 ===================================================== */
 
-const levels = [
+const levelSettings = [
 
-{
-label: "Leicht",
+    {
+        label: "Leicht",
+        count: 5
+    },
 
-tasks: [
+    {
+        label: "Mittel",
+        count: 6
+    },
 
-[
-"+3x",
-"+5",
-"−2x",
-"−4",
-"+6x"
-],
+    {
+        label: "Schwer",
+        count: 6
+    },
 
-[
-"+7x",
-"−3",
-"−2x",
-"+5",
-"+4x"
-],
+    {
+        label: "Profi",
+        count: 7
+    },
 
-[
-"−5x",
-"+8",
-"+2x",
-"−3",
-"+x"
-]
+    {
+        label: "Experte",
+        count: 9
+    }
 
-]
-
-},
+];
 
 
-{
-label: "Mittel",
+/*
+   Erlaubte Termarten je Level.
+*/
 
-tasks: [
+const levelKinds = [
 
-[
-"+4x",
-"+7",
-"−2y",
-"−3x",
-"+5y",
-"−2"
-],
+    ["x", "num"],
 
-[
-"+3x",
-"−4y",
-"+8",
-"+2x",
-"+y",
-"−5"
-],
+    ["x", "y", "num"],
 
-[
-"−2x",
-"+6y",
-"−3",
-"+5x",
-"−y",
-"+4"
-]
+    ["x2", "x", "y", "num"],
 
-]
+    ["x2", "x", "y2", "y", "num"],
 
-},
+    ["x2", "x", "y2", "y", "xy", "xy3", "num"]
+
+];
 
 
-{
-label: "Schwer",
+/* =====================================================
+   ZUFALL
+===================================================== */
 
-tasks: [
+function randomInt(min, max) {
 
-[
-"+3x²",
-"−2x",
-"+4y",
-"−x²",
-"−3y",
-"+7"
-],
-
-[
-"+4x²",
-"+3x",
-"−2y",
-"−2x²",
-"+5y",
-"−4"
-],
-
-[
-"−3x²",
-"+5x",
-"+2y",
-"+x²",
-"−4y",
-"+8"
-]
-
-]
-
-},
-
-
-{
-label: "Profi",
-
-tasks: [
-
-[
-"+4x²",
-"−2x",
-"+3y²",
-"−4y",
-"+x²",
-"−2y²",
-"+7"
-],
-
-[
-"+2x²",
-"+5x",
-"−3y²",
-"+2y",
-"−x²",
-"−4y²",
-"+6"
-],
-
-[
-"−3x²",
-"+4x",
-"+2y²",
-"−y",
-"+x²",
-"−5y²",
-"+8"
-]
-
-]
-
-},
-
-
-{
-label: "Experte",
-
-tasks: [
-
-[
-"+3x²",
-"−2x",
-"+4xy³",
-"−2y",
-"+x²",
-"−3xy",
-"+5y²",
-"−4y²",
-"+8"
-],
-
-[
-"+2xy",
-"+3x²",
-"−4x",
-"−xy",
-"+2y²",
-"−3y",
-"−x²",
-"+5",
-"+y"
-],
-
-[
-"−3xy³",
-"+4x",
-"+2xy",
-"−x²",
-"+3y⁶",
-"+x²",
-"−2y",
-"+7",
-"−y"
-]
-
-]
+    return Math.floor(
+        Math.random() * (max - min + 1)
+    ) + min;
 
 }
 
-];
+
+function randomCoefficient() {
+
+    let value = randomInt(1, 7);
+
+    if (Math.random() < 0.5) {
+        value *= -1;
+    }
+
+    return value;
+
+}
+
+
+/* =====================================================
+   TERM ERZEUGEN
+===================================================== */
+
+function generateTerm(kind) {
+
+    let coefficient =
+        randomCoefficient();
+
+
+    if (kind === "num") {
+
+        return {
+            kind: "num",
+            value: coefficient
+        };
+
+    }
+
+
+    if (kind === "x") {
+
+        return {
+            kind: "x",
+            coefficient,
+            variables: [
+                {
+                    variable: "x",
+                    power: 1
+                }
+            ]
+        };
+
+    }
+
+
+    if (kind === "x2") {
+
+        return {
+            kind: "x",
+            coefficient,
+            variables: [
+                {
+                    variable: "x",
+                    power: 2
+                }
+            ]
+        };
+
+    }
+
+
+    if (kind === "y") {
+
+        return {
+            kind: "y",
+            coefficient,
+            variables: [
+                {
+                    variable: "y",
+                    power: 1
+                }
+            ]
+        };
+
+    }
+
+
+    if (kind === "y2") {
+
+        return {
+            kind: "y",
+            coefficient,
+            variables: [
+                {
+                    variable: "y",
+                    power: 2
+                }
+            ]
+        };
+
+    }
+
+
+    if (kind === "xy") {
+
+        return {
+            kind: "xy",
+            coefficient,
+            variables: [
+                {
+                    variable: "x",
+                    power: 1
+                },
+                {
+                    variable: "y",
+                    power: 1
+                }
+            ]
+        };
+
+    }
+
+
+    if (kind === "xy3") {
+
+        return {
+            kind: "xy",
+            coefficient,
+            variables: [
+                {
+                    variable: "x",
+                    power: 1
+                },
+                {
+                    variable: "y",
+                    power: 3
+                }
+            ]
+        };
+
+    }
+
+}
+
+
+/* =====================================================
+   NULL-GRUPPE
+===================================================== */
+
+function createZeroGroup(kind) {
+
+    let a =
+        randomInt(1, 6);
+
+    let b =
+        randomInt(1, 6);
+
+    let c =
+        -(a + b);
+
+
+    function make(coefficient) {
+
+        let term =
+            generateTerm(kind);
+
+        term.coefficient =
+            coefficient;
+
+        return term;
+
+    }
+
+
+    return [
+        make(a),
+        make(b),
+        make(c)
+    ];
+
+}
+
+
+/* =====================================================
+   VERTEILTE TERMARTEN
+===================================================== */
+
+/*
+   Hier wird bewusst versucht, die Termarten
+   gleichmäßiger zu verteilen.
+
+   Dadurch entstehen z.B. bei Level 1 häufiger:
+
+   +3x −2 +5x +7 −x
+
+   statt ständig:
+
+   +3 +5 −2 +7x +1
+*/
+
+function createBalancedKinds(level, count) {
+
+    const available =
+        levelKinds[level];
+
+
+    let selected = [];
+
+
+    /*
+       Level 1:
+       Normalerweise ungefähr halb x,
+       halb Zahlen.
+
+       In ca. jedem 3. Fall darf die Verteilung
+       stärker zufällig werden.
+    */
+
+    if (level === 0) {
+
+        const normalBalanced =
+            Math.random() < 0.67;
+
+
+        if (normalBalanced) {
+
+            const xCount =
+                Math.ceil(count / 2);
+
+            const numCount =
+                count - xCount;
+
+
+            for (
+                let i = 0;
+                i < xCount;
+                i++
+            ) {
+
+                selected.push("x");
+
+            }
+
+
+            for (
+                let i = 0;
+                i < numCount;
+                i++
+            ) {
+
+                selected.push("num");
+
+            }
+
+        }
+
+        else {
+
+            /*
+               Bewusst stärkere Zufallsverteilung.
+            */
+
+            for (
+                let i = 0;
+                i < count;
+                i++
+            ) {
+
+                selected.push(
+                    Math.random() < 0.5
+                    ? "x"
+                    : "num"
+                );
+
+            }
+
+        }
+
+
+        return shuffle(selected);
+
+    }
+
+
+    /*
+       Level 2:
+       x, y und Zahlen sollen möglichst
+       alle vorkommen.
+    */
+
+    if (level === 1) {
+
+        selected.push("x");
+        selected.push("y");
+        selected.push("num");
+
+
+        while (
+            selected.length < count
+        ) {
+
+            selected.push(
+                available[
+                    randomInt(
+                        0,
+                        available.length - 1
+                    )
+                ]
+            );
+
+        }
+
+
+        return shuffle(selected);
+
+    }
+
+
+    /*
+       Ab Level 3:
+       Grundsätzlich mehrere unterschiedliche
+       Termbereiche erzwingen.
+    */
+
+    const mandatory =
+        [...available];
+
+
+    /*
+       Zahlen und mindestens zwei Variabletypen
+       sollen normalerweise vertreten sein.
+    */
+
+    shuffle(mandatory);
+
+
+    const wanted =
+        Math.min(
+            count,
+            Math.max(
+                3,
+                Math.ceil(
+                    available.length * 0.65
+                )
+            )
+        );
+
+
+    selected.push(
+        ...mandatory.slice(
+            0,
+            wanted
+        )
+    );
+
+
+    while (
+        selected.length < count
+    ) {
+
+        selected.push(
+            available[
+                randomInt(
+                    0,
+                    available.length - 1
+                )
+            ]
+        );
+
+    }
+
+
+    return shuffle(selected);
+
+}
+
+
+/* =====================================================
+   AUFGABE ERZEUGEN
+===================================================== */
+
+function generateTask(level) {
+
+    const settings =
+        levelSettings[level];
+
+
+    let terms = [];
+
+
+    /*
+       Ab Level 2 gelegentlich eine
+       komplette Null-Gruppe.
+    */
+
+    const zeroChance =
+        level === 0
+        ? 0
+        : 0.35;
+
+
+    const useZeroGroup =
+        Math.random() < zeroChance;
+
+
+    if (useZeroGroup) {
+
+        const possibleZeroKinds =
+            levelKinds[level].filter(
+                kind =>
+                    kind !== "num"
+            );
+
+
+        const zeroKind =
+            possibleZeroKinds[
+                randomInt(
+                    0,
+                    possibleZeroKinds.length - 1
+                )
+            ];
+
+
+        const zeroGroup =
+            createZeroGroup(
+                zeroKind
+            );
+
+
+        terms.push(
+            ...zeroGroup
+        );
+
+    }
+
+
+    /*
+       Restliche Termarten ausgewogen erzeugen.
+    */
+
+    const remaining =
+        settings.count -
+        terms.length;
+
+
+    if (remaining > 0) {
+
+        const kinds =
+            createBalancedKinds(
+                level,
+                remaining
+            );
+
+
+        kinds.forEach(
+            kind => {
+
+                terms.push(
+                    generateTerm(kind)
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+       Level 1:
+       Sicherheitshalber mindestens ein x
+       und mindestens eine Zahl.
+    */
+
+    if (level === 0) {
+
+        const hasX =
+            terms.some(
+                term =>
+                    term.kind === "x"
+            );
+
+
+        const hasNum =
+            terms.some(
+                term =>
+                    term.kind === "num"
+            );
+
+
+        if (!hasX) {
+
+            terms[0] =
+                generateTerm("x");
+
+        }
+
+
+        if (!hasNum) {
+
+            terms[
+                terms.length - 1
+            ] =
+                generateTerm("num");
+
+        }
+
+    }
+
+
+    return shuffle(terms);
+
+}
 
 
 /* =====================================================
@@ -1230,31 +1417,34 @@ let draggedElement = null;
 
 function shuffle(array) {
 
-const copy = [...array];
+    const copy = [...array];
 
-for (
-let i = copy.length - 1;
-i > 0;
-i--
-) {
 
-const j =
-Math.floor(
-Math.random() * (i + 1)
-);
+    for (
+        let i = copy.length - 1;
+        i > 0;
+        i--
+    ) {
 
-[
-copy[i],
-copy[j]
-] =
-[
-copy[j],
-copy[i]
-];
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
 
-}
 
-return copy;
+        [
+            copy[i],
+            copy[j]
+        ] =
+        [
+            copy[j],
+            copy[i]
+        ];
+
+    }
+
+
+    return copy;
 
 }
 
@@ -1265,34 +1455,37 @@ return copy;
 
 function clearFeedback() {
 
-const feedback =
-document.getElementById(
-"feedback"
-);
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
 
-feedback.textContent = "";
 
-feedback.className =
-"feedback";
+    feedback.textContent = "";
+
+    feedback.className =
+        "feedback";
 
 }
 
 
 function showFeedback(
-message,
-type
+    message,
+    type
 ) {
 
-const feedback =
-document.getElementById(
-"feedback"
-);
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
 
-feedback.textContent =
-message;
 
-feedback.className =
-"feedback " + type;
+    feedback.textContent =
+        message;
+
+
+    feedback.className =
+        "feedback " + type;
 
 }
 
@@ -1303,196 +1496,203 @@ feedback.className =
 
 function parseTerm(text) {
 
-text =
-text.replace(/−/g, "-");
+    text =
+        text.replace(/−/g, "-");
 
-let sign = 1;
 
-if (
-text.startsWith("-")
-) {
+    let sign = 1;
 
-sign = -1;
 
-}
+    if (
+        text.startsWith("-")
+    ) {
 
-text =
-text.replace(
-/^[+-]/,
-""
-);
+        sign = -1;
 
+    }
 
-/* ZAHL */
 
-if (
-/^\d+$/.test(text)
-) {
+    text =
+        text.replace(
+            /^[+-]/,
+            ""
+        );
 
-return {
 
-kind: "num",
+    if (
+        /^\d+$/.test(text)
+    ) {
 
-value:
-sign *
-Number(text)
+        return {
 
-};
+            kind: "num",
 
-}
+            value:
+                sign *
+                Number(text)
 
+        };
 
-/* KOEFFIZIENT */
+    }
 
-const coefficientText =
-text.match(/^\d*/)[0];
 
-const coefficient =
-coefficientText === ""
-?
-1
-:
-Number(coefficientText);
+    const coefficientText =
+        text.match(/^\d*/)[0];
 
 
-const variableText =
-text.substring(
-coefficientText.length
-);
+    const coefficient =
+        coefficientText === ""
+        ?
+        1
+        :
+        Number(coefficientText);
 
 
-const variables = [];
+    const variableText =
+        text.substring(
+            coefficientText.length
+        );
 
-let i = 0;
 
+    const variables = [];
 
-while (
-i < variableText.length
-) {
+    let i = 0;
 
-const variable =
-variableText[i];
 
-i++;
+    while (
+        i < variableText.length
+    ) {
 
-let power = 1;
+        const variable =
+            variableText[i];
 
 
-if (
-variableText[i] === "²"
-) {
+        i++;
 
-power = 2;
 
-i++;
+        let power = 1;
 
-}
 
-else if (
-variableText[i] === "³"
-) {
+        if (
+            variableText[i] === "²"
+        ) {
 
-power = 3;
+            power = 2;
 
-i++;
+            i++;
 
-}
+        }
 
-else if (
-variableText[i] === "^"
-) {
+        else if (
+            variableText[i] === "³"
+        ) {
 
-i++;
+            power = 3;
 
-let number = "";
+            i++;
 
-while (
+        }
 
-i <
-variableText.length
+        else if (
+            variableText[i] === "^"
+        ) {
 
-&&
+            i++;
 
-/\d/.test(
-variableText[i]
-)
 
-) {
+            let number = "";
 
-number +=
-variableText[i];
 
-i++;
+            while (
 
-}
+                i <
+                variableText.length
 
-power =
-Number(number);
+                &&
 
-}
+                /\d/.test(
+                    variableText[i]
+                )
 
+            ) {
 
-variables.push({
+                number +=
+                    variableText[i];
 
-variable,
+                i++;
 
-power
+            }
 
-});
 
-}
+            power =
+                Number(number);
 
+        }
 
-const hasX =
-variables.some(
-v =>
-v.variable === "x"
-);
 
-const hasY =
-variables.some(
-v =>
-v.variable === "y"
-);
+        variables.push({
 
+            variable,
 
-let kind;
+            power
 
+        });
 
-if (
-hasX &&
-hasY
-) {
+    }
 
-kind = "xy";
 
-}
+    const hasX =
+        variables.some(
+            v =>
+                v.variable === "x"
+        );
 
-else if (
-hasX
-) {
 
-kind = "x";
+    const hasY =
+        variables.some(
+            v =>
+                v.variable === "y"
+        );
 
-}
 
-else {
+    let kind;
 
-kind = "y";
 
-}
+    if (
+        hasX &&
+        hasY
+    ) {
 
+        kind = "xy";
 
-return {
+    }
 
-kind,
+    else if (
+        hasX
+    ) {
 
-coefficient:
-sign * coefficient,
+        kind = "x";
 
-variables
+    }
 
-};
+    else {
+
+        kind = "y";
+
+    }
+
+
+    return {
+
+        kind,
+
+        coefficient:
+            sign *
+            coefficient,
+
+        variables
+
+    };
 
 }
 
@@ -1503,31 +1703,34 @@ variables
 
 function powerText(power) {
 
-if (
-power === 1
-) {
+    if (
+        power === 1
+    ) {
 
-return "";
+        return "";
 
-}
+    }
 
-if (
-power === 2
-) {
 
-return "²";
+    if (
+        power === 2
+    ) {
 
-}
+        return "²";
 
-if (
-power === 3
-) {
+    }
 
-return "³";
 
-}
+    if (
+        power === 3
+    ) {
 
-return "^" + power;
+        return "³";
+
+    }
+
+
+    return "^" + power;
 
 }
 
@@ -1538,66 +1741,56 @@ return "^" + power;
 
 function displayTerm(term) {
 
-if (
-term.kind === "num"
-) {
+    if (
+        term.kind === "num"
+    ) {
 
-return term.value >= 0
+        return term.value >= 0
+            ? "+" + term.value
+            : "−" + Math.abs(term.value);
 
-?
-"+" + term.value
-
-:
-
-"−" +
-Math.abs(
-term.value
-);
-
-}
+    }
 
 
-const sign =
-term.coefficient >= 0
-?
-"+"
-:
-"−";
+    const sign =
+        term.coefficient >= 0
+        ? "+"
+        : "−";
 
 
-const amount =
-Math.abs(
-term.coefficient
-);
+    const amount =
+        Math.abs(
+            term.coefficient
+        );
 
 
-let result =
-sign;
+    let result =
+        sign;
 
 
-if (
-amount !== 1
-) {
+    if (
+        amount !== 1
+    ) {
 
-result += amount;
+        result += amount;
 
-}
-
-
-term.variables.forEach(
-v => {
-
-result +=
-v.variable +
-powerText(
-v.power
-);
-
-}
-);
+    }
 
 
-return result;
+    term.variables.forEach(
+        v => {
+
+            result +=
+                v.variable +
+                powerText(
+                    v.power
+                );
+
+        }
+    );
+
+
+    return result;
 
 }
 
@@ -1606,43 +1799,57 @@ return result;
    AUSDRUCK
 ===================================================== */
 
+/*
+   WICHTIG:
+   Hier keine Zeilenumbrüche direkt nach "return"!
+
+   Dadurch wird garantiert der komplette Ausdruck
+   erzeugt und nicht nur das erste Plättchen.
+*/
+
 function expression(terms) {
 
-return terms
-.map(
-(term, index) => {
+    if (
+        !terms ||
+        terms.length === 0
+    ) {
 
-const text =
-displayTerm(term);
+        return "0";
 
-
-if (
-index === 0
-) {
-
-return text;
-
-}
+    }
 
 
-if (
-text.startsWith("+")
-) {
+    return terms
+        .map(
+            (term, index) => {
 
-return
-" + " +
-text.substring(1);
-
-}
+                const text =
+                    displayTerm(term);
 
 
-return
-" − " +
-text.substring(1);
+                if (
+                    index === 0
+                ) {
 
-}
-)
-.join("");
+                    return text;
+
+                }
+
+
+                if (
+                    text.startsWith("+")
+                ) {
+
+                    return " + " + text.substring(1);
+
+                }
+
+
+                return " − " + text.substring(1);
+
+            }
+        )
+        .join("");
 
 }
 
@@ -1653,7 +1860,7 @@ text.substring(1);
 
 function category(term) {
 
-return term.kind;
+    return term.kind;
 
 }
 
@@ -1664,23 +1871,23 @@ return term.kind;
 
 function likeKey(term) {
 
-if (
-term.kind === "num"
-) {
+    if (
+        term.kind === "num"
+    ) {
 
-return "NUMBER";
+        return "NUMBER";
 
-}
+    }
 
 
-return term.variables
-.map(
-v =>
-v.variable +
-"^" +
-v.power
-)
-.join("_");
+    return term.variables
+        .map(
+            v =>
+                v.variable +
+                "^" +
+                v.power
+        )
+        .join("_");
 
 }
 
@@ -1690,50 +1897,49 @@ v.power
 ===================================================== */
 
 function createTile(
-term,
-parent,
-neutral = false
+    term,
+    parent,
+    neutral = false
 ) {
 
-const tile =
-document.createElement(
-"div"
-);
+    const tile =
+        document.createElement(
+            "div"
+        );
 
 
-tile.className =
-"term " +
-(
-neutral
-?
-"neutral"
-:
-term.kind
-);
+    tile.className =
+        "term " +
+        (
+            neutral
+            ? "neutral"
+            : term.kind
+        );
 
 
-tile.textContent =
-displayTerm(term);
+    tile.textContent =
+        displayTerm(term);
 
 
-tile.draggable = true;
+    tile.draggable =
+        true;
 
 
-tile.termData =
-JSON.parse(
-JSON.stringify(term)
-);
+    tile.termData =
+        JSON.parse(
+            JSON.stringify(term)
+        );
 
 
-addDragEvents(tile);
+    addDragEvents(tile);
 
 
-parent.appendChild(
-tile
-);
+    parent.appendChild(
+        tile
+    );
 
 
-return tile;
+    return tile;
 
 }
 
@@ -1744,54 +1950,56 @@ return tile;
 
 function addDragEvents(tile) {
 
-tile.addEventListener(
-"dragstart",
+    tile.addEventListener(
+        "dragstart",
 
-event => {
+        event => {
 
-draggedElement =
-tile;
-
-event.dataTransfer.effectAllowed =
-"move";
-
-}
-);
+            draggedElement =
+                tile;
 
 
-tile.addEventListener(
-"dragend",
+            event.dataTransfer.effectAllowed =
+                "move";
 
-() => {
-
-draggedElement =
-null;
-
-document
-.querySelectorAll(
-".drag-over"
-)
-.forEach(
-el =>
-el.classList.remove(
-"drag-over"
-)
-);
+        }
+    );
 
 
-document
-.querySelectorAll(
-".combine-target"
-)
-.forEach(
-el =>
-el.classList.remove(
-"combine-target"
-)
-);
+    tile.addEventListener(
+        "dragend",
 
-}
-);
+        () => {
+
+            draggedElement =
+                null;
+
+
+            document
+                .querySelectorAll(
+                    ".drag-over"
+                )
+                .forEach(
+                    el =>
+                        el.classList.remove(
+                            "drag-over"
+                        )
+                );
+
+
+            document
+                .querySelectorAll(
+                    ".combine-target"
+                )
+                .forEach(
+                    el =>
+                        el.classList.remove(
+                            "combine-target"
+                        )
+                );
+
+        }
+    );
 
 }
 
@@ -1801,36 +2009,36 @@ el.classList.remove(
 ===================================================== */
 
 function setTileColor(
-tile,
-type
+    tile,
+    type
 ) {
 
-tile.classList.remove(
-"neutral",
-"x",
-"y",
-"xy",
-"num"
-);
+    tile.classList.remove(
+        "neutral",
+        "x",
+        "y",
+        "xy",
+        "num"
+    );
 
 
-if (
-type === "pool"
-) {
+    if (
+        type === "pool"
+    ) {
 
-tile.classList.add(
-"neutral"
-);
+        tile.classList.add(
+            "neutral"
+        );
 
-}
+    }
 
-else {
+    else {
 
-tile.classList.add(
-type
-);
+        tile.classList.add(
+            type
+        );
 
-}
+    }
 
 }
 
@@ -1841,135 +2049,125 @@ type
 
 function createZones() {
 
-const container =
-document.getElementById(
-"zones"
-);
-
-container.innerHTML = "";
+    const container =
+        document.getElementById(
+            "zones"
+        );
 
 
-const types =
-[
-...new Set(
-originalTerms.map(
-category
-)
-)
-];
+    container.innerHTML = "";
 
 
-/*
-   Zufällige Reihenfolge.
-
-   Diese Reihenfolge wird nur beim
-   Erstellen der Aufgabe bestimmt.
-*/
-
-shuffle(types)
-.forEach(
-type => {
-
-const zone =
-document.createElement(
-"div"
-);
+    const types =
+        [
+            ...new Set(
+                originalTerms.map(
+                    category
+                )
+            )
+        ];
 
 
-zone.className =
-"drop-zone zone-" +
-type;
+    shuffle(types)
+        .forEach(
+            type => {
+
+                const zone =
+                    document.createElement(
+                        "div"
+                    );
 
 
-zone.dataset.category =
-type;
+                zone.className =
+                    "drop-zone zone-" +
+                    type;
 
 
-let title = "";
-
-let description = "";
-
-
-if (
-type === "x"
-) {
-
-title =
-"🔵 x-Terme";
-
-description =
-"x, x², x³ ...";
-
-}
+                zone.dataset.category =
+                    type;
 
 
-if (
-type === "y"
-) {
+                let title = "";
 
-title =
-"🟢 y-Terme";
-
-description =
-"y, y², y³ ...";
-
-}
+                let description = "";
 
 
-if (
-type === "xy"
-) {
+                if (
+                    type === "x"
+                ) {
 
-title =
-"🟣 xy-Terme";
+                    title =
+                        "🔵 x-Terme";
 
-description =
-"Terme mit x und y";
+                    description =
+                        "x, x², x³ ...";
 
-}
-
-
-if (
-type === "num"
-) {
-
-title =
-"🟡 Zahlen";
-
-description =
-"ohne Variable";
-
-}
+                }
 
 
-zone.innerHTML = `
+                if (
+                    type === "y"
+                ) {
 
-<div class="zone-title">
+                    title =
+                        "🟢 y-Terme";
 
-${title}
+                    description =
+                        "y, y², y³ ...";
 
-</div>
-
-<div class="zone-description">
-
-${description}
-
-</div>
-
-<div class="zone-content"></div>
-
-`;
+                }
 
 
-setupZone(zone);
+                if (
+                    type === "xy"
+                ) {
+
+                    title =
+                        "🟣 xy-Terme";
+
+                    description =
+                        "Terme mit x und y";
+
+                }
 
 
-container.appendChild(
-zone
-);
+                if (
+                    type === "num"
+                ) {
 
-}
-);
+                    title =
+                        "🟡 Zahlen";
+
+                    description =
+                        "ohne Variable";
+
+                }
+
+
+                zone.innerHTML = `
+
+                    <div class="zone-title">
+                        ${title}
+                    </div>
+
+                    <div class="zone-description">
+                        ${description}
+                    </div>
+
+                    <div class="zone-content"></div>
+
+                `;
+
+
+                setupZone(zone);
+
+
+                container.appendChild(
+                    zone
+                );
+
+            }
+        );
 
 }
 
@@ -1980,91 +2178,86 @@ zone
 
 function setupZone(zone) {
 
-zone.addEventListener(
-"dragover",
+    zone.addEventListener(
+        "dragover",
 
-event => {
+        event => {
 
-if (
-step === 1
-) {
+            if (
+                step === 1
+            ) {
 
-event.preventDefault();
+                event.preventDefault();
 
-zone.classList.add(
-"drag-over"
-);
+                zone.classList.add(
+                    "drag-over"
+                );
 
-}
+            }
 
-}
-);
-
-
-zone.addEventListener(
-"dragleave",
-
-() => {
-
-zone.classList.remove(
-"drag-over"
-);
-
-}
-);
+        }
+    );
 
 
-zone.addEventListener(
-"drop",
+    zone.addEventListener(
+        "dragleave",
 
-event => {
+        () => {
 
-if (
-step !== 1 ||
-!draggedElement
-) {
+            zone.classList.remove(
+                "drag-over"
+            );
 
-return;
-
-}
+        }
+    );
 
 
-event.preventDefault();
+    zone.addEventListener(
+        "drop",
+
+        event => {
+
+            if (
+                step !== 1 ||
+                !draggedElement
+            ) {
+
+                return;
+
+            }
 
 
-zone.classList.remove(
-"drag-over"
-);
+            event.preventDefault();
 
 
-/*
-   Absichtlich:
-   Das Plättchen nimmt die Farbe
-   des Bereichs an.
-*/
-
-setTileColor(
-draggedElement,
-zone.dataset.category
-);
+            zone.classList.remove(
+                "drag-over"
+            );
 
 
-zone
-.querySelector(
-".zone-content"
-)
-.appendChild(
-draggedElement
-);
+            setTileColor(
+                draggedElement,
+                zone.dataset.category
+            );
 
 
-clearFeedback();
+            zone
+                .querySelector(
+                    ".zone-content"
+                )
+                .appendChild(
+                    draggedElement
+                );
 
 
-draggedElement = null;
+            clearFeedback();
 
-}
-);
+
+            draggedElement =
+                null;
+
+        }
+    );
 
 }
 
@@ -2075,92 +2268,88 @@ draggedElement = null;
 
 function checkSorting() {
 
-const placed =
-[
-...document.querySelectorAll(
-"#zones .term"
-)
-];
+    const placed =
+        [
+            ...document.querySelectorAll(
+                "#zones .term"
+            )
+        ];
 
 
-if (
-placed.length !==
-originalTerms.length
-) {
+    if (
+        placed.length !==
+        originalTerms.length
+    ) {
 
-showFeedback(
-"❌ Sortiere zuerst alle Plättchen in einen Bereich.",
-"error"
-);
+        showFeedback(
+            "❌ Sortiere zuerst alle Plättchen in einen Bereich.",
+            "error"
+        );
 
-return;
+        return;
 
-}
-
-
-let mistakes = 0;
+    }
 
 
-placed.forEach(
-tile => {
-
-const zone =
-tile.closest(
-".drop-zone"
-);
+    let mistakes = 0;
 
 
-const correctCategory =
-category(
-tile.termData
-);
+    placed.forEach(
+        tile => {
+
+            const zone =
+                tile.closest(
+                    ".drop-zone"
+                );
 
 
-if (
-
-zone.dataset.category !==
-correctCategory
-
-) {
-
-mistakes++;
-
-}
-
-}
-);
+            const correctCategory =
+                category(
+                    tile.termData
+                );
 
 
-if (
-mistakes > 0
-) {
+            if (
+                zone.dataset.category !==
+                correctCategory
+            ) {
 
-showFeedback(
+                mistakes++;
 
-`❌ ${mistakes} Plättchen ${
-mistakes === 1
-?
-"ist"
-:
-"sind"
-} noch falsch zugeordnet.`,
+            }
 
-"error"
-
-);
-
-return;
-
-}
+        }
+    );
 
 
-clearFeedback();
+    if (
+        mistakes > 0
+    ) {
 
-step = 2;
+        showFeedback(
 
-prepareCombining();
+            `❌ ${mistakes} Plättchen ${
+                mistakes === 1
+                ? "ist"
+                : "sind"
+            } noch falsch zugeordnet.`,
 
-updateStepDisplay();
+            "error"
+
+        );
+
+        return;
+
+    }
+
+
+    clearFeedback();
+
+    step = 2;
+
+    prepareCombining();
+
+    updateStepDisplay();
 
 }
 
@@ -2171,63 +2360,54 @@ updateStepDisplay();
 
 function prepareCombining() {
 
-document.getElementById(
-"currentTitle"
-).textContent =
-"🧲 Zusammenfassen";
+    document.getElementById(
+        "currentTitle"
+    ).textContent =
+        "🧲 Zusammenfassen";
 
 
-document.getElementById(
-"currentDescription"
-).textContent =
-"Ziehe gleichartige Plättchen direkt aufeinander.";
+    document.getElementById(
+        "currentDescription"
+    ).textContent =
+        "Ziehe gleichartige Plättchen direkt aufeinander.";
 
 
-/*
-   Grauer Bereich bleibt leer.
-*/
-
-const pool =
-document.getElementById(
-"pool"
-);
-
-pool.innerHTML = "";
+    const pool =
+        document.getElementById(
+            "pool"
+        );
 
 
-/*
-   Hinweis.
-*/
-
-const hint =
-document.getElementById(
-"hint"
-);
-
-hint.innerHTML =
-"✨ Ziehe gleichartige Plättchen direkt aufeinander.";
-
-hint.classList.remove(
-"empty"
-);
-
-hint.classList.add(
-"visible"
-);
+    pool.innerHTML = "";
 
 
-/*
-   Zusammenfassen aktivieren.
-*/
+    const hint =
+        document.getElementById(
+            "hint"
+        );
 
-document
-.querySelectorAll(
-"#zones .term"
-)
-.forEach(
-tile =>
-setupCombineTile(tile)
-);
+
+    hint.innerHTML =
+        "✨ Ziehe gleichartige Plättchen direkt aufeinander.";
+
+
+    hint.classList.remove(
+        "empty"
+    );
+
+    hint.classList.add(
+        "visible"
+    );
+
+
+    document
+        .querySelectorAll(
+            "#zones .term"
+        )
+        .forEach(
+            tile =>
+                setupCombineTile(tile)
+        );
 
 }
 
@@ -2238,129 +2418,114 @@ setupCombineTile(tile)
 
 function setupCombineTile(tile) {
 
-tile.addEventListener(
-"dragover",
+    tile.addEventListener(
+        "dragover",
 
-event => {
+        event => {
 
-if (
+            if (
+                step !== 2 ||
+                !draggedElement ||
+                draggedElement === tile
+            ) {
 
-step !== 2 ||
+                return;
 
-!draggedElement ||
-
-draggedElement === tile
-
-) {
-
-return;
-
-}
+            }
 
 
-if (
+            if (
+                likeKey(
+                    draggedElement.termData
+                )
+                ===
+                likeKey(
+                    tile.termData
+                )
+            ) {
 
-likeKey(
-draggedElement.termData
-)
+                event.preventDefault();
 
-===
+                tile.classList.add(
+                    "combine-target"
+                );
 
-likeKey(
-tile.termData
-)
+            }
 
-) {
-
-event.preventDefault();
-
-tile.classList.add(
-"combine-target"
-);
-
-}
-
-}
-);
+        }
+    );
 
 
-tile.addEventListener(
-"dragleave",
+    tile.addEventListener(
+        "dragleave",
 
-() => {
+        () => {
 
-tile.classList.remove(
-"combine-target"
-);
+            tile.classList.remove(
+                "combine-target"
+            );
 
-}
-);
-
-
-tile.addEventListener(
-"drop",
-
-event => {
-
-if (
-step !== 2
-) {
-
-return;
-
-}
+        }
+    );
 
 
-event.preventDefault();
+    tile.addEventListener(
+        "drop",
+
+        event => {
+
+            if (
+                step !== 2
+            ) {
+
+                return;
+
+            }
 
 
-tile.classList.remove(
-"combine-target"
-);
+            event.preventDefault();
 
 
-if (
-
-!draggedElement ||
-
-draggedElement === tile
-
-) {
-
-return;
-
-}
+            tile.classList.remove(
+                "combine-target"
+            );
 
 
-if (
+            if (
+                !draggedElement ||
+                draggedElement === tile
+            ) {
 
-likeKey(
-draggedElement.termData
-)
+                return;
 
-!==
-
-likeKey(
-tile.termData
-)
-
-) {
-
-return;
-
-}
+            }
 
 
-clearFeedback();
+            if (
+                likeKey(
+                    draggedElement.termData
+                )
+                !==
+                likeKey(
+                    tile.termData
+                )
+            ) {
+
+                return;
+
+            }
 
 
-mergeTiles(
-draggedElement,
-tile
-);
+            clearFeedback();
 
-}
-);
+
+            mergeTiles(
+                draggedElement,
+                tile
+            );
+
+        }
+    );
 
 }
 
@@ -2370,156 +2535,139 @@ tile
 ===================================================== */
 
 function mergeTiles(
-source,
-target
+    source,
+    target
 ) {
 
-const sourceTerm =
-source.termData;
+    const sourceTerm =
+        source.termData;
 
 
-const targetTerm =
-target.termData;
+    const targetTerm =
+        target.termData;
 
 
-let result;
+    let result;
 
 
-if (
-sourceTerm.kind === "num"
-) {
+    if (
+        sourceTerm.kind === "num"
+    ) {
 
-result = {
+        result = {
 
-kind: "num",
+            kind: "num",
 
-value:
+            value:
+                sourceTerm.value +
+                targetTerm.value
 
-sourceTerm.value +
+        };
 
-targetTerm.value
+    }
 
-};
+    else {
 
-}
+        result = {
 
-else {
+            kind:
+                targetTerm.kind,
 
-result = {
+            coefficient:
+                sourceTerm.coefficient +
+                targetTerm.coefficient,
 
-kind:
-targetTerm.kind,
+            variables:
+                JSON.parse(
+                    JSON.stringify(
+                        targetTerm.variables
+                    )
+                )
 
-coefficient:
+        };
 
-sourceTerm.coefficient +
-
-targetTerm.coefficient,
-
-variables:
-
-JSON.parse(
-JSON.stringify(
-targetTerm.variables
-)
-)
-
-};
-
-}
+    }
 
 
-/*
-   Position des Zielplättchens behalten.
-*/
-
-const parent =
-target.parentElement;
+    const parent =
+        target.parentElement;
 
 
-const marker =
-document.createComment(
-"merge-position"
-);
+    const marker =
+        document.createComment(
+            "merge-position"
+        );
 
 
-parent.insertBefore(
-marker,
-target
-);
+    parent.insertBefore(
+        marker,
+        target
+    );
 
 
-source.remove();
+    source.remove();
 
-target.remove();
-
-
-const isZero =
-
-result.kind === "num"
-
-?
-
-result.value === 0
-
-:
-
-result.coefficient === 0;
+    target.remove();
 
 
-/*
-   Genau EIN neues Ergebnisplättchen.
-*/
-
-if (!isZero) {
-
-const newTile =
-document.createElement(
-"div"
-);
+    const isZero =
+        result.kind === "num"
+        ?
+        result.value === 0
+        :
+        result.coefficient === 0;
 
 
-newTile.className =
-"term " +
-result.kind;
+    if (!isZero) {
+
+        const newTile =
+            document.createElement(
+                "div"
+            );
 
 
-newTile.textContent =
-displayTerm(result);
+        newTile.className =
+            "term " +
+            result.kind;
 
 
-newTile.draggable =
-true;
+        newTile.textContent =
+            displayTerm(result);
 
 
-newTile.termData =
-JSON.parse(
-JSON.stringify(result)
-);
+        newTile.draggable =
+            true;
 
 
-addDragEvents(
-newTile
-);
+        newTile.termData =
+            JSON.parse(
+                JSON.stringify(result)
+            );
 
 
-parent.insertBefore(
-newTile,
-marker
-);
+        addDragEvents(
+            newTile
+        );
 
 
-setupCombineTile(
-newTile
-);
+        parent.insertBefore(
+            newTile,
+            marker
+        );
 
-}
+
+        setupCombineTile(
+            newTile
+        );
+
+    }
 
 
-marker.remove();
+    marker.remove();
 
-draggedElement =
-null;
+
+    draggedElement =
+        null;
 
 }
 
@@ -2530,85 +2678,75 @@ null;
 
 function checkCombining() {
 
-const tiles =
-[
-...document.querySelectorAll(
-"#zones .term"
-)
-];
+    const tiles =
+        [
+            ...document.querySelectorAll(
+                "#zones .term"
+            )
+        ];
 
 
-let stillPossible =
-false;
+    let stillPossible =
+        false;
 
 
-for (
-let i = 0;
-i < tiles.length;
-i++
-) {
+    for (
+        let i = 0;
+        i < tiles.length;
+        i++
+    ) {
 
-for (
-let j = i + 1;
-j < tiles.length;
-j++
-) {
+        for (
+            let j = i + 1;
+            j < tiles.length;
+            j++
+        ) {
 
-if (
+            if (
+                likeKey(
+                    tiles[i].termData
+                )
+                ===
+                likeKey(
+                    tiles[j].termData
+                )
+            ) {
 
-likeKey(
-tiles[i].termData
-)
+                stillPossible =
+                    true;
 
-===
+            }
 
-likeKey(
-tiles[j].termData
-)
+        }
 
-) {
-
-stillPossible =
-true;
-
-}
-
-}
-
-}
+    }
 
 
-if (
-stillPossible
-) {
+    if (
+        stillPossible
+    ) {
 
-showFeedback(
+        showFeedback(
+            "❌ Es können noch gleichartige Terme zusammengefasst werden.",
+            "error"
+        );
 
-"❌ Es können noch gleichartige Terme zusammengefasst werden.",
+        return;
 
-"error"
-
-);
-
-return;
-
-}
+    }
 
 
-step = 3;
+    step = 3;
 
-prepareOrdering();
+    prepareOrdering();
 
-updateStepDisplay();
+    updateStepDisplay();
 
 
-showFeedback(
-
-"✓ Sehr gut! Jetzt ordne die Terme.",
-
-"success"
-
-);
+    showFeedback(
+        "✓ Sehr gut! Jetzt ordne die Terme.",
+        "success"
+    );
 
 }
 
@@ -2619,71 +2757,65 @@ showFeedback(
 
 function prepareOrdering() {
 
-document.getElementById(
-"currentTitle"
-).textContent =
-"↕️ Terme ordnen";
+    document.getElementById(
+        "currentTitle"
+    ).textContent =
+        "↕️ Terme ordnen";
 
 
-document.getElementById(
-"currentDescription"
-).textContent =
-"Ziehe alle Plättchen zurück in den grauen Bereich und ordne sie.";
+    document.getElementById(
+        "currentDescription"
+    ).textContent =
+        "Ziehe alle Plättchen zurück in den grauen Bereich und ordne sie.";
 
 
-const pool =
-document.getElementById(
-"pool"
-);
+    const pool =
+        document.getElementById(
+            "pool"
+        );
 
 
-pool.innerHTML = `
+    pool.innerHTML = `
 
-<div class="pool-label">
+        <div class="pool-label">
+            Ziehe die Plättchen hierher und ordne sie.
+        </div>
 
-Ziehe die Plättchen hierher und ordne sie.
-
-</div>
-
-`;
+    `;
 
 
-pool.classList.add(
-"order-active"
-);
+    pool.classList.add(
+        "order-active"
+    );
 
 
-/*
-   Sortierregel ins Hinweisfeld.
-*/
-
-const hint =
-document.getElementById(
-"hint"
-);
+    const hint =
+        document.getElementById(
+            "hint"
+        );
 
 
-hint.innerHTML = `
+    hint.innerHTML = `
 
-<strong>Ordne die Terme:</strong><br>
+        <strong>Ordne die Terme:</strong><br>
 
-x-Terme → xy-Terme → y-Terme → Zahlen<br>
+        x-Terme → xy-Terme → y-Terme → Zahlen<br>
 
-Innerhalb einer Gruppe werden die Potenzen fallend geordnet.
+        Innerhalb einer Gruppe werden die Potenzen fallend geordnet.
 
-`;
-
-
-hint.classList.remove(
-"empty"
-);
-
-hint.classList.add(
-"visible"
-);
+    `;
 
 
-setupOrderPool();
+    hint.classList.remove(
+        "empty"
+    );
+
+    hint.classList.add(
+        "visible"
+    );
+
+
+    setupOrderPool();
 
 }
 
@@ -2694,141 +2826,134 @@ setupOrderPool();
 
 function setupOrderPool() {
 
-const pool =
-document.getElementById(
-"pool"
-);
+    const pool =
+        document.getElementById(
+            "pool"
+        );
 
 
-pool.addEventListener(
-"dragover",
+    pool.addEventListener(
+        "dragover",
 
-event => {
+        event => {
 
-if (
-step !== 3
-) return;
-
-
-event.preventDefault();
+            if (
+                step !== 3
+            ) return;
 
 
-pool.classList.add(
-"drag-over"
-);
-
-}
-);
+            event.preventDefault();
 
 
-pool.addEventListener(
-"dragleave",
+            pool.classList.add(
+                "drag-over"
+            );
 
-() => {
-
-pool.classList.remove(
-"drag-over"
-);
-
-}
-);
+        }
+    );
 
 
-pool.addEventListener(
-"drop",
+    pool.addEventListener(
+        "dragleave",
 
-event => {
+        () => {
 
-if (
+            pool.classList.remove(
+                "drag-over"
+            );
 
-step !== 3 ||
-
-!draggedElement
-
-) {
-
-return;
-
-}
+        }
+    );
 
 
-event.preventDefault();
+    pool.addEventListener(
+        "drop",
+
+        event => {
+
+            if (
+                step !== 3 ||
+                !draggedElement
+            ) {
+
+                return;
+
+            }
 
 
-pool.classList.remove(
-"drag-over"
-);
+            event.preventDefault();
 
 
-const tiles =
-[
-...pool.querySelectorAll(
-".term"
-)
-]
-.filter(
-tile =>
-tile !== draggedElement
-);
+            pool.classList.remove(
+                "drag-over"
+            );
 
 
-let inserted =
-false;
+            const tiles =
+                [
+                    ...pool.querySelectorAll(
+                        ".term"
+                    )
+                ]
+                .filter(
+                    tile =>
+                        tile !==
+                        draggedElement
+                );
 
 
-for (
-const tile of tiles
-) {
-
-const rect =
-tile.getBoundingClientRect();
+            let inserted =
+                false;
 
 
-if (
+            for (
+                const tile of tiles
+            ) {
 
-event.clientX <
-
-rect.left +
-rect.width / 2
-
-) {
-
-pool.insertBefore(
-draggedElement,
-tile
-);
-
-inserted =
-true;
-
-break;
-
-}
-
-}
+                const rect =
+                    tile.getBoundingClientRect();
 
 
-if (!inserted) {
+                if (
+                    event.clientX <
+                    rect.left +
+                    rect.width / 2
+                ) {
 
-pool.appendChild(
-draggedElement
-);
-
-}
-
-
-/*
-   Farbe bleibt erhalten!
-*/
-
-clearFeedback();
+                    pool.insertBefore(
+                        draggedElement,
+                        tile
+                    );
 
 
-draggedElement =
-null;
+                    inserted =
+                        true;
 
-}
-);
+
+                    break;
+
+                }
+
+            }
+
+
+            if (!inserted) {
+
+                pool.appendChild(
+                    draggedElement
+                );
+
+            }
+
+
+            clearFeedback();
+
+
+            draggedElement =
+                null;
+
+        }
+    );
 
 }
 
@@ -2839,88 +2964,75 @@ null;
 
 function orderKey(term) {
 
-if (
-term.kind === "x"
-) {
+    if (
+        term.kind === "x"
+    ) {
 
-const x =
-term.variables.find(
-v =>
-v.variable === "x"
-);
-
-
-return [
-
-1,
-
--x.power
-
-];
-
-}
+        const x =
+            term.variables.find(
+                v =>
+                    v.variable === "x"
+            );
 
 
-if (
-term.kind === "xy"
-) {
+        return [
+            1,
+            -x.power
+        ];
 
-const x =
-term.variables.find(
-v =>
-v.variable === "x"
-);
+    }
 
 
-const y =
-term.variables.find(
-v =>
-v.variable === "y"
-);
+    if (
+        term.kind === "xy"
+    ) {
+
+        const x =
+            term.variables.find(
+                v =>
+                    v.variable === "x"
+            );
 
 
-return [
-
-2,
-
--(x ? x.power : 0),
-
--(y ? y.power : 0)
-
-];
-
-}
+        const y =
+            term.variables.find(
+                v =>
+                    v.variable === "y"
+            );
 
 
-if (
-term.kind === "y"
-) {
+        return [
+            2,
+            -(x ? x.power : 0),
+            -(y ? y.power : 0)
+        ];
 
-const y =
-term.variables.find(
-v =>
-v.variable === "y"
-);
+    }
 
 
-return [
+    if (
+        term.kind === "y"
+    ) {
 
-3,
-
--y.power
-
-];
-
-}
+        const y =
+            term.variables.find(
+                v =>
+                    v.variable === "y"
+            );
 
 
-return [
+        return [
+            3,
+            -y.power
+        ];
 
-4,
+    }
 
-0
 
-];
+    return [
+        4,
+        0
+    ];
 
 }
 
@@ -2929,57 +3041,55 @@ return [
    VERGLEICH
 ===================================================== */
 
-function compareTerms(a,b) {
+function compareTerms(a, b) {
 
-const A =
-orderKey(a);
-
-
-const B =
-orderKey(b);
+    const A =
+        orderKey(a);
 
 
-for (
-let i = 0;
-
-i <
-Math.max(
-A.length,
-B.length
-);
-
-i++
-) {
-
-const av =
-A[i] ?? 0;
+    const B =
+        orderKey(b);
 
 
-const bv =
-B[i] ?? 0;
+    for (
+        let i = 0;
+        i <
+        Math.max(
+            A.length,
+            B.length
+        );
+        i++
+    ) {
+
+        const av =
+            A[i] ?? 0;
 
 
-if (
-av < bv
-) {
-
-return -1;
-
-}
+        const bv =
+            B[i] ?? 0;
 
 
-if (
-av > bv
-) {
+        if (
+            av < bv
+        ) {
 
-return 1;
+            return -1;
 
-}
-
-}
+        }
 
 
-return 0;
+        if (
+            av > bv
+        ) {
+
+            return 1;
+
+        }
+
+    }
+
+
+    return 0;
 
 }
 
@@ -2990,136 +3100,216 @@ return 0;
 
 function checkOrdering() {
 
-const zoneTiles =
-document.querySelectorAll(
-"#zones .term"
-);
+    const zoneTiles =
+        document.querySelectorAll(
+            "#zones .term"
+        );
 
 
-if (
-zoneTiles.length > 0
-) {
+    if (
+        zoneTiles.length > 0
+    ) {
 
-showFeedback(
+        showFeedback(
+            "❌ Ziehe zuerst alle Plättchen in den grauen Bereich.",
+            "error"
+        );
 
-"❌ Ziehe zuerst alle Plättchen in den grauen Bereich.",
+        return;
 
-"error"
-
-);
-
-return;
-
-}
+    }
 
 
-const tiles =
-[
-...document.querySelectorAll(
-"#pool .term"
-)
-];
+    const tiles =
+        [
+            ...document.querySelectorAll(
+                "#pool .term"
+            )
+        ];
 
 
-if (
-tiles.length === 0
-) {
+    if (
+        tiles.length === 0
+    ) {
 
-showFeedback(
+        showFeedback(
+            "❌ Ziehe zuerst die Plättchen in den grauen Bereich.",
+            "error"
+        );
 
-"❌ Ziehe zuerst die Plättchen in den grauen Bereich.",
+        return;
 
-"error"
-
-);
-
-return;
-
-}
+    }
 
 
-const actual =
-tiles.map(
-tile =>
-tile.termData
-);
+    const actual =
+        tiles.map(
+            tile =>
+                tile.termData
+        );
 
 
-const correct =
-[...actual].sort(
-compareTerms
-);
+    const correct =
+        [...actual].sort(
+            compareTerms
+        );
 
 
-let right =
-true;
+    let right =
+        true;
 
 
-for (
-let i = 0;
+    for (
+        let i = 0;
+        i < actual.length;
+        i++
+    ) {
 
-i <
-actual.length;
+        if (
+            likeKey(
+                actual[i]
+            )
+            !==
+            likeKey(
+                correct[i]
+            )
+        ) {
 
-i++
-) {
+            right =
+                false;
 
-if (
+        }
 
-likeKey(
-actual[i]
-)
-
-!==
-
-likeKey(
-correct[i]
-)
-
-) {
-
-right =
-false;
-
-}
-
-}
+    }
 
 
-if (!right) {
+    if (!right) {
 
-showFeedback(
+        showFeedback(
+            "❌ Die Reihenfolge stimmt noch nicht.",
+            "error"
+        );
 
-"❌ Die Reihenfolge stimmt noch nicht.",
+        return;
 
-"error"
-
-);
-
-return;
-
-}
+    }
 
 
-showFeedback(
-
-"🎉 Perfekt! Alles richtig!",
-
-"success"
-
-);
+    showFeedback(
+        "🎉 Perfekt! Alles richtig!",
+        "success"
+    );
 
 
-document.getElementById(
-"finalResult"
-).textContent =
-expression(actual);
+    /*
+       ==================================================
+       WICHTIG:
+       Die vollständige ursprüngliche Angabe bleibt
+       oben stehen.
+
+       Darunter erscheint erst nach erfolgreicher
+       Lösung:
+
+       = vollständiger vereinfachter Term
+       ==================================================
+    */
+
+    const task =
+        document.getElementById(
+            "task"
+        );
 
 
-document.getElementById(
-"resultCard"
-).style.display =
-"block";
+    const originalExpression =
+        expression(
+            originalTerms
+        );
+
+
+    const finalExpression =
+        expression(
+            actual
+        );
+
+
+    task.innerHTML = "";
+
+
+    const original =
+        document.createElement(
+            "div"
+        );
+
+
+    original.className =
+        "task-original";
+
+
+    original.textContent =
+        originalExpression;
+
+
+    const solution =
+        document.createElement(
+            "div"
+        );
+
+
+    solution.className =
+        "task-solution";
+
+
+    const equals =
+        document.createElement(
+            "span"
+        );
+
+
+    equals.className =
+        "solution-equals";
+
+
+    equals.textContent =
+        "=";
+
+
+    const result =
+        document.createElement(
+            "span"
+        );
+
+
+    result.className =
+        "solution-expression";
+
+
+    result.textContent =
+        finalExpression;
+
+
+    solution.appendChild(
+        equals
+    );
+
+
+    solution.appendChild(
+        result
+    );
+
+
+    task.appendChild(
+        original
+    );
+
+
+    task.appendChild(
+        solution
+    );
+
+
+    task.classList.add(
+        "solved"
+    );
 
 }
 
@@ -3130,27 +3320,27 @@ document.getElementById(
 
 function checkStep() {
 
-if (
-step === 1
-) {
+    if (
+        step === 1
+    ) {
 
-checkSorting();
+        checkSorting();
 
-}
+    }
 
-else if (
-step === 2
-) {
+    else if (
+        step === 2
+    ) {
 
-checkCombining();
+        checkCombining();
 
-}
+    }
 
-else {
+    else {
 
-checkOrdering();
+        checkOrdering();
 
-}
+    }
 
 }
 
@@ -3161,76 +3351,76 @@ checkOrdering();
 
 function updateStepDisplay() {
 
-for (
-let i = 1;
-i <= 3;
-i++
-) {
+    for (
+        let i = 1;
+        i <= 3;
+        i++
+    ) {
 
-const element =
-document.getElementById(
-"step" + i
-);
-
-
-element.className =
-"step";
+        const element =
+            document.getElementById(
+                "step" + i
+            );
 
 
-if (
-i < step
-) {
-
-element.classList.add(
-"done"
-);
-
-}
+        element.className =
+            "step";
 
 
-if (
-i === step
-) {
+        if (
+            i < step
+        ) {
 
-element.classList.add(
-"active"
-);
+            element.classList.add(
+                "done"
+            );
 
-}
-
-}
+        }
 
 
-const button =
-document.getElementById(
-"checkButton"
-);
+        if (
+            i === step
+        ) {
+
+            element.classList.add(
+                "active"
+            );
+
+        }
+
+    }
 
 
-if (
-step === 1
-) {
+    const button =
+        document.getElementById(
+            "checkButton"
+        );
 
-button.textContent =
-"✓ Sortierung überprüfen";
 
-}
+    if (
+        step === 1
+    ) {
 
-else if (
-step === 2
-) {
+        button.textContent =
+            "✓ Sortierung überprüfen";
 
-button.textContent =
-"✓ Zusammenfassen überprüfen";
+    }
 
-}
+    else if (
+        step === 2
+    ) {
 
-else {
+        button.textContent =
+            "✓ Zusammenfassen überprüfen";
 
-button.textContent =
-"✓ Ordnung überprüfen";
+    }
 
-}
+    else {
+
+        button.textContent =
+            "✓ Ordnung überprüfen";
+
+    }
 
 }
 
@@ -3241,7 +3431,7 @@ button.textContent =
 
 function resetTask() {
 
-render();
+    render();
 
 }
 
@@ -3252,23 +3442,9 @@ render();
 
 function nextTask() {
 
-taskIndex++;
+    taskIndex++;
 
-
-if (
-
-taskIndex >=
-
-levels[difficulty].tasks.length
-
-) {
-
-taskIndex = 0;
-
-}
-
-
-render();
+    render();
 
 }
 
@@ -3279,66 +3455,70 @@ render();
 
 function buildDifficulty() {
 
-const container =
-document.getElementById(
-"difficulty"
-);
+    const container =
+        document.getElementById(
+            "difficulty"
+        );
 
 
-container.innerHTML =
-"";
+    container.innerHTML =
+        "";
 
 
-levels.forEach(
-(level,index) => {
+    levelSettings.forEach(
+        (level, index) => {
 
-const button =
-document.createElement(
-"button"
-);
-
-
-button.className =
-"diff";
+            const button =
+                document.createElement(
+                    "button"
+                );
 
 
-if (
-index === difficulty
-) {
-
-button.classList.add(
-"active"
-);
-
-}
+            button.className =
+                "diff";
 
 
-button.onclick =
-() => {
+            if (
+                index === difficulty
+            ) {
 
-difficulty =
-index;
+                button.classList.add(
+                    "active"
+                );
 
-taskIndex =
-0;
-
-render();
-
-};
+            }
 
 
-container.appendChild(
-button
-);
+            button.onclick =
+                () => {
 
-}
-);
+                    difficulty =
+                        index;
 
 
-document.getElementById(
-"difficultyLabel"
-).textContent =
-levels[difficulty].label;
+                    taskIndex =
+                        0;
+
+
+                    render();
+
+                };
+
+
+            container.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "difficultyLabel"
+    ).textContent =
+        levelSettings[
+            difficulty
+        ].label;
 
 }
 
@@ -3349,155 +3529,171 @@ levels[difficulty].label;
 
 function render() {
 
-step = 1;
+    step = 1;
 
-draggedElement =
-null;
-
-
-originalTerms =
-levels[difficulty]
-.tasks[taskIndex]
-.map(
-parseTerm
-);
+    draggedElement =
+        null;
 
 
-/*
-   Der komplette Ausdruck wird als Text
-   in das Aufgabenfeld geschrieben.
-*/
+    /*
+       Neue zufällige Aufgabe.
+    */
 
-document.getElementById(
-"task"
-).textContent =
-expression(
-originalTerms
-);
+    originalTerms =
+        generateTask(
+            difficulty
+        );
 
 
-document.getElementById(
-"taskNumber"
-).textContent =
+    /*
+       ==================================================
+       GANZ WICHTIG:
+       Die komplette Angabe wird als EIN Text
+       gesetzt.
 
-"Aufgabe " +
+       Nicht die einzelnen Plättchen!
+       ==================================================
+    */
 
-(taskIndex + 1) +
-
-" / " +
-
-levels[difficulty]
-.tasks.length;
-
-
-/*
-   Schritt 1
-*/
-
-document.getElementById(
-"currentTitle"
-).textContent =
-"🔵🟢🟣🟡 Sortieren";
+    const task =
+        document.getElementById(
+            "task"
+        );
 
 
-document.getElementById(
-"currentDescription"
-).textContent =
-"Ziehe jedes Plättchen in den passenden Bereich.";
+    task.classList.remove(
+        "solved"
+    );
 
 
-/*
-   Grauer Bereich
-*/
-
-const pool =
-document.getElementById(
-"pool"
-);
+    task.innerHTML = "";
 
 
-pool.classList.remove(
-"order-active"
-);
+    const original =
+        document.createElement(
+            "div"
+        );
 
 
-pool.innerHTML = `
-
-<div class="pool-label">
-
-Plättchen
-
-</div>
-
-`;
+    original.className =
+        "task-original";
 
 
-shuffle(
-originalTerms
-)
-.forEach(
-term => {
-
-createTile(
-term,
-pool,
-true
-);
-
-}
-);
+    original.textContent =
+        expression(
+            originalTerms
+        );
 
 
-/*
-   Sortierkästen.
-
-   Nur hier werden sie neu erzeugt.
-*/
-
-createZones();
+    task.appendChild(
+        original
+    );
 
 
-/*
-   Hinweis zurücksetzen.
-*/
-
-const hint =
-document.getElementById(
-"hint"
-);
+    document.getElementById(
+        "taskNumber"
+    ).textContent =
+        "Aufgabe " +
+        (taskIndex + 1);
 
 
-hint.innerHTML =
-"";
+    /*
+       Schritt 1.
+    */
+
+    document.getElementById(
+        "currentTitle"
+    ).textContent =
+        "🔵🟢🟣🟡 Sortieren";
 
 
-hint.classList.remove(
-"visible"
-);
+    document.getElementById(
+        "currentDescription"
+    ).textContent =
+        "Ziehe jedes Plättchen in den passenden Bereich.";
 
 
-hint.classList.add(
-"empty"
-);
+    /*
+       Grauer Bereich.
+    */
+
+    const pool =
+        document.getElementById(
+            "pool"
+        );
 
 
-/*
-   Ergebnis ausblenden.
-*/
-
-document.getElementById(
-"resultCard"
-).style.display =
-"none";
+    pool.classList.remove(
+        "order-active"
+    );
 
 
-clearFeedback();
+    pool.innerHTML = `
+
+        <div class="pool-label">
+            Plättchen
+        </div>
+
+    `;
 
 
-buildDifficulty();
+    /*
+       Plättchen zufällig verteilen.
+    */
+
+    shuffle(
+        originalTerms
+    )
+    .forEach(
+        term => {
+
+            createTile(
+                term,
+                pool,
+                true
+            );
+
+        }
+    );
 
 
-updateStepDisplay();
+    /*
+       Sortierkästen.
+    */
+
+    createZones();
+
+
+    /*
+       Hinweis zurücksetzen.
+    */
+
+    const hint =
+        document.getElementById(
+            "hint"
+        );
+
+
+    hint.innerHTML =
+        "";
+
+
+    hint.classList.remove(
+        "visible"
+    );
+
+
+    hint.classList.add(
+        "empty"
+    );
+
+
+    clearFeedback();
+
+
+    buildDifficulty();
+
+    updateStepDisplay();
 
 }
 
