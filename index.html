@@ -1,0 +1,3551 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🧮 Terme-Labor</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f6f7fb;
+    color: #202124;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.app {
+    max-width: 1150px;
+    margin: auto;
+    padding: 30px 20px 60px;
+}
+
+/* =====================================================
+   TITEL
+===================================================== */
+
+h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.subtitle {
+    color: #6b7280;
+    margin-top: 8px;
+}
+
+
+/* =====================================================
+   KARTEN
+===================================================== */
+
+.card,
+.result-card,
+.explanation {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+
+/* =====================================================
+   SCHWIERIGKEIT
+===================================================== */
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+
+    background: white;
+
+    padding: 15px 20px;
+
+    border-radius: 16px;
+
+    border: 1px solid #e5e7eb;
+
+    margin-top: 20px;
+}
+
+.difficulty {
+    display: flex;
+    gap: 7px;
+}
+
+.diff {
+    width: 42px;
+    height: 10px;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 20px;
+
+    background: #d1d5db;
+
+    cursor: pointer;
+}
+
+.diff.active {
+    background: #6366f1;
+}
+
+.diff-label {
+    font-weight: bold;
+    color: #6b7280;
+}
+
+
+/* =====================================================
+   SCHRITTE
+===================================================== */
+
+.step-indicator {
+    display: flex;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin: 20px 0;
+
+    flex-wrap: wrap;
+}
+
+.step {
+    padding: 8px 14px;
+
+    border-radius: 20px;
+
+    background: #eceef2;
+
+    color: #7b8190;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.step.active {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+.step.done {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+
+/* =====================================================
+   AUFGABE
+===================================================== */
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+
+/*
+   Die Aufgabe darf umbrechen.
+
+   Der komplette ursprüngliche Ausdruck
+   wird direkt angezeigt.
+*/
+
+.task {
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 32px;
+
+    font-weight: bold;
+
+    padding: 20px 10px;
+
+    line-height: 1.5;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+
+    word-break: normal;
+
+    min-height: 82px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+.step-title {
+    text-align: center;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    margin-top: 10px;
+}
+
+.step-description {
+    text-align: center;
+
+    color: #6b7280;
+
+    margin: 8px 0 20px;
+}
+
+
+/* =====================================================
+   GRAUER BEREICH
+===================================================== */
+
+.term-pool {
+    min-height: 120px;
+
+    border: 2px dashed #d1d5db;
+
+    background: #f8fafc;
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    justify-content: center;
+
+    align-items: center;
+
+    transition: .2s;
+
+    position: relative;
+}
+
+.pool-label {
+    width: 100%;
+
+    text-align: center;
+
+    color: #9ca3af;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   SORTIERKÄSTCHEN
+===================================================== */
+
+.drop-zones {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(210px, 1fr)
+        );
+
+    gap: 15px;
+
+    margin-top: 20px;
+}
+
+.drop-zone {
+    min-height: 210px;
+
+    border-radius: 18px;
+
+    padding: 15px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform .15s,
+        box-shadow .15s;
+}
+
+
+/*
+   Die dunkle Hover-Fläche.
+*/
+
+.drop-zone::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0);
+
+    pointer-events: none;
+
+    transition: background .15s;
+}
+
+
+/*
+   HOVER / DRAGOVER
+*/
+
+.drop-zone.drag-over::after {
+    background: rgba(0, 0, 0, 0.14);
+}
+
+
+/*
+   Der Inhalt muss über dem Overlay liegen.
+*/
+
+.drop-zone > * {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* X */
+
+.zone-x {
+    background: #eff6ff;
+
+    border: 2px dashed #60a5fa;
+}
+
+
+/* Y */
+
+.zone-y {
+    background: #f0fdf4;
+
+    border: 2px dashed #4ade80;
+}
+
+
+/* XY */
+
+.zone-xy {
+    background: #faf5ff;
+
+    border: 2px dashed #c084fc;
+}
+
+
+/* ZAHLEN */
+
+.zone-num {
+    background: #fffbeb;
+
+    border: 2px dashed #facc15;
+}
+
+
+.zone-content {
+    flex: 1;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    align-content: flex-start;
+
+    justify-content: center;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.zone-title {
+    text-align: center;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.zone-description {
+    text-align: center;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    margin: 5px 0 15px;
+}
+
+
+/* =====================================================
+   PLÄTTCHEN
+===================================================== */
+
+.term {
+    min-width: 72px;
+
+    min-height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 8px 14px;
+
+    border-radius: 14px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: grab;
+
+    user-select: none;
+
+    transition:
+        transform .15s,
+        box-shadow .15s,
+        border-color .15s,
+        background .15s,
+        color .15s;
+}
+
+.term:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 14px
+        rgba(0,0,0,.12);
+}
+
+
+/* =====================================================
+   NEUTRAL
+===================================================== */
+
+.term.neutral {
+    background: #eceff3;
+
+    border: 2px solid #d1d5db;
+
+    color: #4b5563;
+}
+
+
+/* =====================================================
+   X = BLAU
+===================================================== */
+
+.term.x {
+    background: #dbeafe;
+
+    border: 2px solid #60a5fa;
+
+    color: #1d4ed8;
+}
+
+
+/* =====================================================
+   Y = GRÜN
+===================================================== */
+
+.term.y {
+    background: #dcfce7;
+
+    border: 2px solid #4ade80;
+
+    color: #15803d;
+}
+
+
+/* =====================================================
+   XY = LILA
+===================================================== */
+
+.term.xy {
+    background: #f3e8ff;
+
+    border: 2px solid #c084fc;
+
+    color: #7e22ce;
+}
+
+
+/* =====================================================
+   ZAHLEN = GELB
+===================================================== */
+
+.term.num {
+    background: #fef3c7;
+
+    border: 2px solid #fbbf24;
+
+    color: #92400e;
+}
+
+
+/* =====================================================
+   ZUSAMMENFASSEN
+===================================================== */
+
+.combine-target {
+    transform: scale(1.08);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(99,102,241,.2);
+}
+
+
+/* =====================================================
+   HINWEIS
+===================================================== */
+
+.hint {
+    min-height: 62px;
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    background: #f5f3ff;
+
+    color: #6d28d9;
+
+    font-weight: bold;
+
+    text-align: center;
+
+    line-height: 1.5;
+
+    display: none;
+}
+
+.hint.visible {
+    display: block;
+}
+
+
+/*
+   Wenn kein Hinweis angezeigt wird,
+   bleibt der Platz trotzdem erhalten.
+*/
+
+.hint.empty {
+    visibility: hidden;
+
+    display: block;
+}
+
+
+/* =====================================================
+   FEEDBACK
+===================================================== */
+
+.feedback {
+    min-height: 28px;
+
+    text-align: center;
+
+    font-weight: bold;
+
+    margin-top: 18px;
+}
+
+.feedback.error {
+    color: #dc2626;
+}
+
+.feedback.success {
+    color: #15803d;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+}
+
+button {
+    padding: 11px 18px;
+
+    border: 0;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+button.primary {
+    background: #202124;
+
+    color: white;
+}
+
+button.secondary {
+    background: #e5e7eb;
+}
+
+
+/* =====================================================
+   ORDNEN
+===================================================== */
+
+.order-active {
+    border-color: #9ca3af;
+}
+
+
+/*
+   Beim Sortieren bleiben die Farben erhalten.
+*/
+
+.order-active .term.x {
+    background: #dbeafe;
+}
+
+.order-active .term.y {
+    background: #dcfce7;
+}
+
+.order-active .term.xy {
+    background: #f3e8ff;
+}
+
+.order-active .term.num {
+    background: #fef3c7;
+}
+
+
+/* =====================================================
+   ERGEBNIS
+===================================================== */
+
+.result-card {
+    display: none;
+}
+
+.result-title {
+    font-size: 21px;
+
+    font-weight: bold;
+}
+
+.final-result {
+    background: #f8fafc;
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    margin-top: 15px;
+}
+
+.final-value {
+    font-size: 30px;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .task {
+        font-size: 24px;
+
+        min-height: 70px;
+    }
+
+    .drop-zones {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =====================================================
+   SEHR KLEINE BILDSCHIRME
+===================================================== */
+
+@media (max-width: 450px) {
+
+    .app {
+        padding:
+            20px 12px 40px;
+    }
+
+    h1 {
+        font-size: 29px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    .task {
+        font-size: 21px;
+
+        padding:
+            15px 5px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<h1>🧮 Terme-Labor</h1>
+
+<p class="subtitle">
+Sortiere Terme, fasse gleichartige Terme zusammen und bringe sie anschließend in die richtige Reihenfolge.
+</p>
+
+
+<!-- =====================================================
+     SCHWIERIGKEIT
+===================================================== -->
+
+<div class="controls">
+
+<strong>Schwierigkeit:</strong>
+
+<div
+    id="difficulty"
+    class="difficulty">
+</div>
+
+<span
+    id="difficultyLabel"
+    class="diff-label">
+</span>
+
+</div>
+
+
+<!-- =====================================================
+     SCHRITTANZEIGE
+===================================================== -->
+
+<div class="step-indicator">
+
+<div
+    id="step1"
+    class="step active">
+
+1 · Sortieren
+
+</div>
+
+<div
+    id="step2"
+    class="step">
+
+2 · Zusammenfassen
+
+</div>
+
+<div
+    id="step3"
+    class="step">
+
+3 · Ordnen
+
+</div>
+
+</div>
+
+
+<section class="card">
+
+
+<!-- =====================================================
+     AUFGABE
+===================================================== -->
+
+<div class="task-header">
+
+<span>AUFGABE</span>
+
+<span id="taskNumber"></span>
+
+</div>
+
+
+<div
+    id="task"
+    class="task">
+</div>
+
+
+<div
+    id="currentTitle"
+    class="step-title">
+
+🔵🟢🟣🟡 Sortieren
+
+</div>
+
+
+<div
+    id="currentDescription"
+    class="step-description">
+
+Ziehe jedes Plättchen in den passenden Bereich.
+
+</div>
+
+
+<!-- =====================================================
+     GRAUER BEREICH
+===================================================== -->
+
+<div
+    id="pool"
+    class="term-pool">
+
+<div class="pool-label">
+
+Plättchen
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     SORTIERKÄSTCHEN
+===================================================== -->
+
+<div
+    id="zones"
+    class="drop-zones">
+</div>
+
+
+<!-- =====================================================
+     HINWEIS
+===================================================== -->
+
+<div
+    id="hint"
+    class="hint empty">
+</div>
+
+
+<!-- =====================================================
+     FEEDBACK
+===================================================== -->
+
+<div
+    id="feedback"
+    class="feedback">
+</div>
+
+
+<!-- =====================================================
+     BUTTONS
+===================================================== -->
+
+<div class="buttons">
+
+<button
+    id="checkButton"
+    class="primary"
+    onclick="checkStep()">
+
+✓ Sortierung überprüfen
+
+</button>
+
+
+<button
+    class="secondary"
+    onclick="resetTask()">
+
+↺ Zurücksetzen
+
+</button>
+
+
+<button
+    class="secondary"
+    onclick="nextTask()">
+
+Nächste Aufgabe
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ERGEBNIS
+===================================================== 
+
+<section
+    id="resultCard"
+    class="result-card">
+
+<div class="result-title">
+
+🎉 Aufgabe geschafft!
+
+</div>
+
+
+<div class="final-result">
+
+<div>
+Der vereinfachte Term lautet:
+</div>
+
+<div
+    id="finalResult"
+    class="final-value">
+</div>
+
+</div>
+
+</section>
+
+-->
+<!-- =====================================================
+     ERKLÄRUNG
+===================================================== -->
+
+<section class="explanation">
+
+<h2>💡 Gleichartige Terme</h2>
+
+<p>
+Gleichartige Terme besitzen dieselben Variablen
+mit denselben Hochzahlen.
+</p>
+
+<p>
+Beispielsweise können
+<strong>3x²</strong>
+und
+<strong>−x²</strong>
+zusammengefasst werden.
+<strong>3x</strong>
+und
+<strong>3x²</strong>
+dagegen nicht.
+</p>
+
+</section>
+
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   AUFGABEN
+===================================================== */
+
+const levels = [
+
+{
+label: "Leicht",
+
+tasks: [
+
+[
+"+3x",
+"+5",
+"−2x",
+"−4",
+"+6x"
+],
+
+[
+"+7x",
+"−3",
+"−2x",
+"+5",
+"+4x"
+],
+
+[
+"−5x",
+"+8",
+"+2x",
+"−3",
+"+x"
+]
+
+]
+
+},
+
+
+{
+label: "Mittel",
+
+tasks: [
+
+[
+"+4x",
+"+7",
+"−2y",
+"−3x",
+"+5y",
+"−2"
+],
+
+[
+"+3x",
+"−4y",
+"+8",
+"+2x",
+"+y",
+"−5"
+],
+
+[
+"−2x",
+"+6y",
+"−3",
+"+5x",
+"−y",
+"+4"
+]
+
+]
+
+},
+
+
+{
+label: "Schwer",
+
+tasks: [
+
+[
+"+3x²",
+"−2x",
+"+4y",
+"−x²",
+"−3y",
+"+7"
+],
+
+[
+"+4x²",
+"+3x",
+"−2y",
+"−2x²",
+"+5y",
+"−4"
+],
+
+[
+"−3x²",
+"+5x",
+"+2y",
+"+x²",
+"−4y",
+"+8"
+]
+
+]
+
+},
+
+
+{
+label: "Profi",
+
+tasks: [
+
+[
+"+4x²",
+"−2x",
+"+3y²",
+"−4y",
+"+x²",
+"−2y²",
+"+7"
+],
+
+[
+"+2x²",
+"+5x",
+"−3y²",
+"+2y",
+"−x²",
+"−4y²",
+"+6"
+],
+
+[
+"−3x²",
+"+4x",
+"+2y²",
+"−y",
+"+x²",
+"−5y²",
+"+8"
+]
+
+]
+
+},
+
+
+{
+label: "Experte",
+
+tasks: [
+
+[
+"+3x²",
+"−2x",
+"+4xy³",
+"−2y",
+"+x²",
+"−3xy",
+"+5y²",
+"−4y²",
+"+8"
+],
+
+[
+"+2xy",
+"+3x²",
+"−4x",
+"−xy",
+"+2y²",
+"−3y",
+"−x²",
+"+5",
+"+y"
+],
+
+[
+"−3xy³",
+"+4x",
+"+2xy",
+"−x²",
+"+3y⁶",
+"+x²",
+"−2y",
+"+7",
+"−y"
+]
+
+]
+
+}
+
+];
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+let difficulty = 0;
+
+let taskIndex = 0;
+
+let step = 1;
+
+let originalTerms = [];
+
+let draggedElement = null;
+
+
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
+function shuffle(array) {
+
+const copy = [...array];
+
+for (
+let i = copy.length - 1;
+i > 0;
+i--
+) {
+
+const j =
+Math.floor(
+Math.random() * (i + 1)
+);
+
+[
+copy[i],
+copy[j]
+] =
+[
+copy[j],
+copy[i]
+];
+
+}
+
+return copy;
+
+}
+
+
+/* =====================================================
+   FEEDBACK
+===================================================== */
+
+function clearFeedback() {
+
+const feedback =
+document.getElementById(
+"feedback"
+);
+
+feedback.textContent = "";
+
+feedback.className =
+"feedback";
+
+}
+
+
+function showFeedback(
+message,
+type
+) {
+
+const feedback =
+document.getElementById(
+"feedback"
+);
+
+feedback.textContent =
+message;
+
+feedback.className =
+"feedback " + type;
+
+}
+
+
+/* =====================================================
+   PARSEN
+===================================================== */
+
+function parseTerm(text) {
+
+text =
+text.replace(/−/g, "-");
+
+let sign = 1;
+
+if (
+text.startsWith("-")
+) {
+
+sign = -1;
+
+}
+
+text =
+text.replace(
+/^[+-]/,
+""
+);
+
+
+/* ZAHL */
+
+if (
+/^\d+$/.test(text)
+) {
+
+return {
+
+kind: "num",
+
+value:
+sign *
+Number(text)
+
+};
+
+}
+
+
+/* KOEFFIZIENT */
+
+const coefficientText =
+text.match(/^\d*/)[0];
+
+const coefficient =
+coefficientText === ""
+?
+1
+:
+Number(coefficientText);
+
+
+const variableText =
+text.substring(
+coefficientText.length
+);
+
+
+const variables = [];
+
+let i = 0;
+
+
+while (
+i < variableText.length
+) {
+
+const variable =
+variableText[i];
+
+i++;
+
+let power = 1;
+
+
+if (
+variableText[i] === "²"
+) {
+
+power = 2;
+
+i++;
+
+}
+
+else if (
+variableText[i] === "³"
+) {
+
+power = 3;
+
+i++;
+
+}
+
+else if (
+variableText[i] === "^"
+) {
+
+i++;
+
+let number = "";
+
+while (
+
+i <
+variableText.length
+
+&&
+
+/\d/.test(
+variableText[i]
+)
+
+) {
+
+number +=
+variableText[i];
+
+i++;
+
+}
+
+power =
+Number(number);
+
+}
+
+
+variables.push({
+
+variable,
+
+power
+
+});
+
+}
+
+
+const hasX =
+variables.some(
+v =>
+v.variable === "x"
+);
+
+const hasY =
+variables.some(
+v =>
+v.variable === "y"
+);
+
+
+let kind;
+
+
+if (
+hasX &&
+hasY
+) {
+
+kind = "xy";
+
+}
+
+else if (
+hasX
+) {
+
+kind = "x";
+
+}
+
+else {
+
+kind = "y";
+
+}
+
+
+return {
+
+kind,
+
+coefficient:
+sign * coefficient,
+
+variables
+
+};
+
+}
+
+
+/* =====================================================
+   TERM DARSTELLUNG
+===================================================== */
+
+function powerText(power) {
+
+if (
+power === 1
+) {
+
+return "";
+
+}
+
+if (
+power === 2
+) {
+
+return "²";
+
+}
+
+if (
+power === 3
+) {
+
+return "³";
+
+}
+
+return "^" + power;
+
+}
+
+
+function displayTerm(term) {
+
+if (
+term.kind === "num"
+) {
+
+return term.value >= 0
+
+?
+"+" + term.value
+
+:
+
+"−" +
+Math.abs(
+term.value
+);
+
+}
+
+
+const sign =
+term.coefficient >= 0
+?
+"+"
+:
+"−";
+
+
+const amount =
+Math.abs(
+term.coefficient
+);
+
+
+let result =
+sign;
+
+
+if (
+amount !== 1
+) {
+
+result += amount;
+
+}
+
+
+term.variables.forEach(
+v => {
+
+result +=
+v.variable +
+powerText(
+v.power
+);
+
+}
+);
+
+
+return result;
+
+}
+
+
+/* =====================================================
+   AUSDRUCK
+===================================================== */
+
+function expression(terms) {
+
+return terms
+.map(
+(term, index) => {
+
+const text =
+displayTerm(term);
+
+
+if (
+index === 0
+) {
+
+return text;
+
+}
+
+
+if (
+text.startsWith("+")
+) {
+
+return
+" + " +
+text.substring(1);
+
+}
+
+
+return
+" − " +
+text.substring(1);
+
+}
+)
+.join("");
+
+}
+
+
+/* =====================================================
+   KATEGORIE
+===================================================== */
+
+function category(term) {
+
+return term.kind;
+
+}
+
+
+/* =====================================================
+   GLEICHARTIG
+===================================================== */
+
+function likeKey(term) {
+
+if (
+term.kind === "num"
+) {
+
+return "NUMBER";
+
+}
+
+
+return term.variables
+.map(
+v =>
+v.variable +
+"^" +
+v.power
+)
+.join("_");
+
+}
+
+
+/* =====================================================
+   PLÄTTCHEN ERSTELLEN
+===================================================== */
+
+function createTile(
+term,
+parent,
+neutral = false
+) {
+
+const tile =
+document.createElement(
+"div"
+);
+
+
+tile.className =
+"term " +
+(
+neutral
+?
+"neutral"
+:
+term.kind
+);
+
+
+tile.textContent =
+displayTerm(term);
+
+
+tile.draggable = true;
+
+
+tile.termData =
+JSON.parse(
+JSON.stringify(term)
+);
+
+
+addDragEvents(tile);
+
+
+parent.appendChild(
+tile
+);
+
+
+return tile;
+
+}
+
+
+/* =====================================================
+   DRAG EVENTS
+===================================================== */
+
+function addDragEvents(tile) {
+
+tile.addEventListener(
+"dragstart",
+
+event => {
+
+draggedElement =
+tile;
+
+event.dataTransfer.effectAllowed =
+"move";
+
+}
+);
+
+
+tile.addEventListener(
+"dragend",
+
+() => {
+
+draggedElement =
+null;
+
+document
+.querySelectorAll(
+".drag-over"
+)
+.forEach(
+el =>
+el.classList.remove(
+"drag-over"
+)
+);
+
+
+document
+.querySelectorAll(
+".combine-target"
+)
+.forEach(
+el =>
+el.classList.remove(
+"combine-target"
+)
+);
+
+}
+);
+
+}
+
+
+/* =====================================================
+   FARBE
+===================================================== */
+
+function setTileColor(
+tile,
+type
+) {
+
+tile.classList.remove(
+"neutral",
+"x",
+"y",
+"xy",
+"num"
+);
+
+
+if (
+type === "pool"
+) {
+
+tile.classList.add(
+"neutral"
+);
+
+}
+
+else {
+
+tile.classList.add(
+type
+);
+
+}
+
+}
+
+
+/* =====================================================
+   SORTIERKÄSTCHEN
+===================================================== */
+
+function createZones() {
+
+const container =
+document.getElementById(
+"zones"
+);
+
+container.innerHTML = "";
+
+
+const types =
+[
+...new Set(
+originalTerms.map(
+category
+)
+)
+];
+
+
+/*
+   Zufällige Reihenfolge.
+
+   Diese Reihenfolge wird EINMAL
+   beim Erstellen der Aufgabe festgelegt.
+
+   Beim Wechsel zu Schritt 3 wird
+   createZones() NICHT erneut aufgerufen.
+*/
+
+shuffle(types)
+.forEach(
+type => {
+
+const zone =
+document.createElement(
+"div"
+);
+
+
+zone.className =
+"drop-zone zone-" +
+type;
+
+
+zone.dataset.category =
+type;
+
+
+let title = "";
+
+let description = "";
+
+
+if (
+type === "x"
+) {
+
+title =
+"🔵 x-Terme";
+
+description =
+"x, x², x³ ...";
+
+}
+
+
+if (
+type === "y"
+) {
+
+title =
+"🟢 y-Terme";
+
+description =
+"y, y², y³ ...";
+
+}
+
+
+if (
+type === "xy"
+) {
+
+title =
+"🟣 xy-Terme";
+
+description =
+"Terme mit x und y";
+
+}
+
+
+if (
+type === "num"
+) {
+
+title =
+"🟡 Zahlen";
+
+description =
+"ohne Variable";
+
+}
+
+
+zone.innerHTML = `
+
+<div class="zone-title">
+
+${title}
+
+</div>
+
+<div class="zone-description">
+
+${description}
+
+</div>
+
+<div class="zone-content"></div>
+
+`;
+
+
+setupZone(zone);
+
+
+container.appendChild(
+zone
+);
+
+}
+);
+
+}
+
+
+/* =====================================================
+   SORTIER-BEREICH
+===================================================== */
+
+function setupZone(zone) {
+
+zone.addEventListener(
+"dragover",
+
+event => {
+
+if (
+step === 1
+) {
+
+event.preventDefault();
+
+zone.classList.add(
+"drag-over"
+);
+
+}
+
+}
+);
+
+
+zone.addEventListener(
+"dragleave",
+
+() => {
+
+zone.classList.remove(
+"drag-over"
+);
+
+}
+);
+
+
+zone.addEventListener(
+"drop",
+
+event => {
+
+if (
+step !== 1 ||
+!draggedElement
+) {
+
+return;
+
+}
+
+
+event.preventDefault();
+
+
+zone.classList.remove(
+"drag-over"
+);
+
+
+/*
+   Farbe richtet sich nach dem Bereich.
+
+   Ein falsch zugeordnetes Plättchen
+   erhält dadurch ebenfalls die Farbe
+   des Bereichs.
+*/
+
+setTileColor(
+draggedElement,
+zone.dataset.category
+);
+
+
+zone
+.querySelector(
+".zone-content"
+)
+.appendChild(
+draggedElement
+);
+
+
+clearFeedback();
+
+
+draggedElement = null;
+
+}
+);
+
+}
+
+
+/* =====================================================
+   SORTIERUNG PRÜFEN
+===================================================== */
+
+function checkSorting() {
+
+const placed =
+[
+...document.querySelectorAll(
+"#zones .term"
+)
+];
+
+
+if (
+placed.length !==
+originalTerms.length
+) {
+
+showFeedback(
+"❌ Sortiere zuerst alle Plättchen in einen Bereich.",
+"error"
+);
+
+return;
+
+}
+
+
+let mistakes = 0;
+
+
+placed.forEach(
+tile => {
+
+const zone =
+tile.closest(
+".drop-zone"
+);
+
+
+const correctCategory =
+category(
+tile.termData
+);
+
+
+if (
+
+zone.dataset.category !==
+correctCategory
+
+) {
+
+mistakes++;
+
+}
+
+}
+);
+
+
+if (
+mistakes > 0
+) {
+
+showFeedback(
+
+`❌ ${mistakes} Plättchen ${
+mistakes === 1
+?
+"ist"
+:
+"sind"
+} noch falsch zugeordnet.`,
+
+"error"
+
+);
+
+return;
+
+}
+
+
+clearFeedback();
+
+step = 2;
+
+prepareCombining();
+
+updateStepDisplay();
+
+}
+
+
+/* =====================================================
+   ZUSAMMENFASSEN VORBEREITEN
+===================================================== */
+
+function prepareCombining() {
+
+document.getElementById(
+"currentTitle"
+).textContent =
+"🧲 Zusammenfassen";
+
+
+document.getElementById(
+"currentDescription"
+).textContent =
+"Ziehe gleichartige Plättchen direkt aufeinander.";
+
+
+/*
+   Der graue Bereich bleibt bestehen
+   und bleibt leer.
+*/
+
+const pool =
+document.getElementById(
+"pool"
+);
+
+pool.innerHTML = "";
+
+
+/*
+   Hinweis unten.
+*/
+
+const hint =
+document.getElementById(
+"hint"
+);
+
+hint.innerHTML =
+"✨ Ziehe gleichartige Plättchen direkt aufeinander.";
+
+hint.classList.remove(
+"empty"
+);
+
+hint.classList.add(
+"visible"
+);
+
+
+/*
+   Zusammenfassen aktivieren.
+*/
+
+document
+.querySelectorAll(
+"#zones .term"
+)
+.forEach(
+tile =>
+setupCombineTile(tile)
+);
+
+}
+
+
+/* =====================================================
+   ZUSAMMENFASSEN
+===================================================== */
+
+function setupCombineTile(tile) {
+
+tile.addEventListener(
+"dragover",
+
+event => {
+
+if (
+
+step !== 2 ||
+
+!draggedElement ||
+
+draggedElement === tile
+
+) {
+
+return;
+
+}
+
+
+if (
+
+likeKey(
+draggedElement.termData
+)
+
+===
+
+likeKey(
+tile.termData
+)
+
+) {
+
+event.preventDefault();
+
+tile.classList.add(
+"combine-target"
+);
+
+}
+
+}
+);
+
+
+tile.addEventListener(
+"dragleave",
+
+() => {
+
+tile.classList.remove(
+"combine-target"
+);
+
+}
+);
+
+
+tile.addEventListener(
+"drop",
+
+event => {
+
+if (
+step !== 2
+) {
+
+return;
+
+}
+
+
+event.preventDefault();
+
+
+tile.classList.remove(
+"combine-target"
+);
+
+
+if (
+
+!draggedElement ||
+
+draggedElement === tile
+
+) {
+
+return;
+
+}
+
+
+if (
+
+likeKey(
+draggedElement.termData
+)
+
+!==
+
+likeKey(
+tile.termData
+)
+
+) {
+
+return;
+
+}
+
+
+clearFeedback();
+
+
+mergeTiles(
+draggedElement,
+tile
+);
+
+}
+);
+
+}
+
+
+/* =====================================================
+   ZUSAMMENFÜGEN
+===================================================== */
+
+function mergeTiles(
+source,
+target
+) {
+
+const sourceTerm =
+source.termData;
+
+
+const targetTerm =
+target.termData;
+
+
+let result;
+
+
+if (
+sourceTerm.kind === "num"
+) {
+
+result = {
+
+kind: "num",
+
+value:
+
+sourceTerm.value +
+
+targetTerm.value
+
+};
+
+}
+
+else {
+
+result = {
+
+kind:
+targetTerm.kind,
+
+coefficient:
+
+sourceTerm.coefficient +
+
+targetTerm.coefficient,
+
+variables:
+
+JSON.parse(
+JSON.stringify(
+targetTerm.variables
+)
+)
+
+};
+
+}
+
+
+/*
+   Exakte Position merken.
+*/
+
+const parent =
+target.parentElement;
+
+
+const marker =
+document.createComment(
+"merge-position"
+);
+
+
+parent.insertBefore(
+marker,
+target
+);
+
+
+source.remove();
+
+target.remove();
+
+
+const isZero =
+
+result.kind === "num"
+
+?
+
+result.value === 0
+
+:
+
+result.coefficient === 0;
+
+
+/*
+   Genau EIN neues Ergebnisplättchen.
+*/
+
+if (!isZero) {
+
+const newTile =
+document.createElement(
+"div"
+);
+
+
+newTile.className =
+"term " +
+result.kind;
+
+
+newTile.textContent =
+displayTerm(result);
+
+
+newTile.draggable =
+true;
+
+
+newTile.termData =
+JSON.parse(
+JSON.stringify(result)
+);
+
+
+addDragEvents(
+newTile
+);
+
+
+parent.insertBefore(
+newTile,
+marker
+);
+
+
+setupCombineTile(
+newTile
+);
+
+}
+
+
+marker.remove();
+
+draggedElement =
+null;
+
+}
+
+
+/* =====================================================
+   ZUSAMMENFASSEN PRÜFEN
+===================================================== */
+
+function checkCombining() {
+
+const tiles =
+[
+...document.querySelectorAll(
+"#zones .term"
+)
+];
+
+
+let stillPossible =
+false;
+
+
+for (
+let i = 0;
+i < tiles.length;
+i++
+) {
+
+for (
+let j = i + 1;
+j < tiles.length;
+j++
+) {
+
+if (
+
+likeKey(
+tiles[i].termData
+)
+
+===
+
+likeKey(
+tiles[j].termData
+)
+
+) {
+
+stillPossible =
+true;
+
+}
+
+}
+
+}
+
+
+if (
+stillPossible
+) {
+
+showFeedback(
+
+"❌ Es können noch gleichartige Terme zusammengefasst werden.",
+
+"error"
+
+);
+
+return;
+
+}
+
+
+step = 3;
+
+prepareOrdering();
+
+updateStepDisplay();
+
+
+showFeedback(
+
+"✓ Sehr gut! Jetzt ordne die Terme.",
+
+"success"
+
+);
+
+}
+
+
+/* =====================================================
+   ORDNEN VORBEREITEN
+===================================================== */
+
+function prepareOrdering() {
+
+document.getElementById(
+"currentTitle"
+).textContent =
+"↕️ Terme ordnen";
+
+
+document.getElementById(
+"currentDescription"
+).textContent =
+"Ziehe alle Plättchen zurück in den grauen Bereich und ordne sie.";
+
+
+/*
+   Der graue Bereich wird zum
+   Sortierbereich.
+
+   Die Plättchen behalten ihre Farben.
+*/
+
+const pool =
+document.getElementById(
+"pool"
+);
+
+
+pool.innerHTML = `
+
+<div class="pool-label">
+
+Ziehe die Plättchen hierher und ordne sie.
+
+</div>
+
+`;
+
+
+pool.classList.add(
+"order-active"
+);
+
+
+/*
+   Hinweisfeld.
+*/
+
+const hint =
+document.getElementById(
+"hint"
+);
+
+
+hint.innerHTML = `
+
+<strong>Ordne die Terme:</strong><br>
+
+x-Terme → xy-Terme → y-Terme → Zahlen<br>
+
+Innerhalb einer Gruppe werden die Potenzen fallend geordnet.
+
+`;
+
+
+hint.classList.remove(
+"empty"
+);
+
+hint.classList.add(
+"visible"
+);
+
+
+setupOrderPool();
+
+}
+
+
+/* =====================================================
+   GRAUER BEREICH – ORDNEN
+===================================================== */
+
+function setupOrderPool() {
+
+const pool =
+document.getElementById(
+"pool"
+);
+
+
+pool.addEventListener(
+"dragover",
+
+event => {
+
+if (
+step !== 3
+) return;
+
+
+event.preventDefault();
+
+
+pool.classList.add(
+"drag-over"
+);
+
+}
+);
+
+
+pool.addEventListener(
+"dragleave",
+
+() => {
+
+pool.classList.remove(
+"drag-over"
+);
+
+}
+);
+
+
+pool.addEventListener(
+"drop",
+
+event => {
+
+if (
+
+step !== 3 ||
+
+!draggedElement
+
+) {
+
+return;
+
+}
+
+
+event.preventDefault();
+
+
+pool.classList.remove(
+"drag-over"
+);
+
+
+const tiles =
+[
+...pool.querySelectorAll(
+".term"
+)
+]
+.filter(
+tile =>
+tile !== draggedElement
+);
+
+
+/*
+   Position anhand der Maus bestimmen.
+*/
+
+let inserted =
+false;
+
+
+for (
+const tile of tiles
+) {
+
+const rect =
+tile.getBoundingClientRect();
+
+
+if (
+
+event.clientX <
+
+rect.left +
+rect.width / 2
+
+) {
+
+pool.insertBefore(
+draggedElement,
+tile
+);
+
+inserted =
+true;
+
+break;
+
+}
+
+}
+
+
+if (!inserted) {
+
+pool.appendChild(
+draggedElement
+);
+
+}
+
+
+/*
+   Farbe bleibt erhalten.
+*/
+
+clearFeedback();
+
+
+draggedElement =
+null;
+
+}
+);
+
+}
+
+
+/* =====================================================
+   ORDNUNGS-SCHLÜSSEL
+===================================================== */
+
+function orderKey(term) {
+
+if (
+term.kind === "x"
+) {
+
+const x =
+term.variables.find(
+v =>
+v.variable === "x"
+);
+
+
+return [
+
+1,
+
+-x.power
+
+];
+
+}
+
+
+if (
+term.kind === "xy"
+) {
+
+const x =
+term.variables.find(
+v =>
+v.variable === "x"
+);
+
+
+const y =
+term.variables.find(
+v =>
+v.variable === "y"
+);
+
+
+return [
+
+2,
+
+-(x ? x.power : 0),
+
+-(y ? y.power : 0)
+
+];
+
+}
+
+
+if (
+term.kind === "y"
+) {
+
+const y =
+term.variables.find(
+v =>
+v.variable === "y"
+);
+
+
+return [
+
+3,
+
+-y.power
+
+];
+
+}
+
+
+return [
+
+4,
+
+0
+
+];
+
+}
+
+
+/* =====================================================
+   VERGLEICH
+===================================================== */
+
+function compareTerms(a,b) {
+
+const A =
+orderKey(a);
+
+
+const B =
+orderKey(b);
+
+
+for (
+let i = 0;
+
+i <
+Math.max(
+A.length,
+B.length
+);
+
+i++
+) {
+
+const av =
+A[i] ?? 0;
+
+
+const bv =
+B[i] ?? 0;
+
+
+if (
+av < bv
+) {
+
+return -1;
+
+}
+
+
+if (
+av > bv
+) {
+
+return 1;
+
+}
+
+}
+
+
+return 0;
+
+}
+
+
+/* =====================================================
+   ORDNUNG PRÜFEN
+===================================================== */
+
+function checkOrdering() {
+
+const zoneTiles =
+document.querySelectorAll(
+"#zones .term"
+);
+
+
+if (
+zoneTiles.length > 0
+) {
+
+showFeedback(
+
+"❌ Ziehe zuerst alle Plättchen in den grauen Bereich.",
+
+"error"
+
+);
+
+return;
+
+}
+
+
+const tiles =
+[
+...document.querySelectorAll(
+"#pool .term"
+)
+];
+
+
+if (
+tiles.length === 0
+) {
+
+showFeedback(
+
+"❌ Ziehe zuerst die Plättchen in den grauen Bereich.",
+
+"error"
+
+);
+
+return;
+
+}
+
+
+const actual =
+tiles.map(
+tile =>
+tile.termData
+);
+
+
+const correct =
+[...actual].sort(
+compareTerms
+);
+
+
+let right =
+true;
+
+
+for (
+let i = 0;
+
+i <
+actual.length;
+
+i++
+) {
+
+if (
+
+likeKey(
+actual[i]
+)
+
+!==
+
+likeKey(
+correct[i]
+)
+
+) {
+
+right =
+false;
+
+}
+
+}
+
+
+if (!right) {
+
+showFeedback(
+
+"❌ Die Reihenfolge stimmt noch nicht.",
+
+"error"
+
+);
+
+return;
+
+}
+
+
+showFeedback(
+
+"🎉 Perfekt! Alles richtig!",
+
+"success"
+
+);
+
+
+document.getElementById(
+"finalResult"
+).textContent =
+expression(actual);
+
+
+document.getElementById(
+"resultCard"
+).style.display =
+"block";
+
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+function checkStep() {
+
+if (
+step === 1
+) {
+
+checkSorting();
+
+}
+
+else if (
+step === 2
+) {
+
+checkCombining();
+
+}
+
+else {
+
+checkOrdering();
+
+}
+
+}
+
+
+/* =====================================================
+   SCHRITTANZEIGE
+===================================================== */
+
+function updateStepDisplay() {
+
+for (
+let i = 1;
+i <= 3;
+i++
+) {
+
+const element =
+document.getElementById(
+"step" + i
+);
+
+
+element.className =
+"step";
+
+
+if (
+i < step
+) {
+
+element.classList.add(
+"done"
+);
+
+}
+
+
+if (
+i === step
+) {
+
+element.classList.add(
+"active"
+);
+
+}
+
+}
+
+
+const button =
+document.getElementById(
+"checkButton"
+);
+
+
+if (
+step === 1
+) {
+
+button.textContent =
+"✓ Sortierung überprüfen";
+
+}
+
+else if (
+step === 2
+) {
+
+button.textContent =
+"✓ Zusammenfassen überprüfen";
+
+}
+
+else {
+
+button.textContent =
+"✓ Ordnung überprüfen";
+
+}
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetTask() {
+
+render();
+
+}
+
+
+/* =====================================================
+   NÄCHSTE AUFGABE
+===================================================== */
+
+function nextTask() {
+
+taskIndex++;
+
+
+if (
+
+taskIndex >=
+
+levels[difficulty].tasks.length
+
+) {
+
+taskIndex = 0;
+
+}
+
+
+render();
+
+}
+
+
+/* =====================================================
+   SCHWIERIGKEIT
+===================================================== */
+
+function buildDifficulty() {
+
+const container =
+document.getElementById(
+"difficulty"
+);
+
+
+container.innerHTML =
+"";
+
+
+levels.forEach(
+(level,index) => {
+
+const button =
+document.createElement(
+"button"
+);
+
+
+button.className =
+"diff";
+
+
+if (
+index === difficulty
+) {
+
+button.classList.add(
+"active"
+);
+
+}
+
+
+button.onclick =
+() => {
+
+difficulty =
+index;
+
+taskIndex =
+0;
+
+render();
+
+};
+
+
+container.appendChild(
+button
+);
+
+}
+);
+
+
+document.getElementById(
+"difficultyLabel"
+).textContent =
+levels[difficulty].label;
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function render() {
+
+step = 1;
+
+draggedElement =
+null;
+
+
+originalTerms =
+levels[difficulty]
+.tasks[taskIndex]
+.map(
+parseTerm
+);
+
+
+/*
+   =====================================================
+   WICHTIGE ÄNDERUNG
+
+   Die Aufgabenangabe wird NICHT mehr aus
+   den bereits geparsten Plättchen erzeugt.
+
+   Stattdessen wird direkt die ursprüngliche
+   Aufgabenliste verwendet.
+
+   Dadurch bleibt garantiert der komplette
+   Ausdruck sichtbar, z.B.:
+
+   +3x²   −2x   +4xy³   −2y   +x²
+   −3xy   +5y²   −4y²   +8
+   =====================================================
+*/
+
+const originalTask =
+levels[difficulty]
+.tasks[taskIndex];
+
+
+document.getElementById(
+"task"
+).textContent =
+originalTask.join("   ");
+
+
+/*
+   Aufgabennummer
+*/
+
+document.getElementById(
+"taskNumber"
+).textContent =
+
+"Aufgabe " +
+
+(taskIndex + 1) +
+
+" / " +
+
+levels[difficulty]
+.tasks.length;
+
+
+/*
+   Schritt 1
+*/
+
+document.getElementById(
+"currentTitle"
+).textContent =
+"🔵🟢🟣🟡 Sortieren";
+
+
+document.getElementById(
+"currentDescription"
+).textContent =
+"Ziehe jedes Plättchen in den passenden Bereich.";
+
+
+/*
+   Grauer Bereich
+*/
+
+const pool =
+document.getElementById(
+"pool"
+);
+
+
+pool.classList.remove(
+"order-active"
+);
+
+
+pool.innerHTML = `
+
+<div class="pool-label">
+
+Plättchen
+
+</div>
+
+`;
+
+
+shuffle(
+originalTerms
+)
+.forEach(
+term => {
+
+createTile(
+term,
+pool,
+true
+);
+
+}
+);
+
+
+/*
+   Sortierkästen nur EINMAL erstellen.
+*/
+
+createZones();
+
+
+/*
+   Hinweis zurücksetzen.
+*/
+
+const hint =
+document.getElementById(
+"hint"
+);
+
+
+hint.innerHTML =
+"";
+
+
+hint.classList.remove(
+"visible"
+);
+
+
+hint.classList.add(
+"empty"
+);
+
+
+/*
+   Ergebnis ausblenden.
+*/
+
+document.getElementById(
+"resultCard"
+).style.display =
+"none";
+
+
+clearFeedback();
+
+
+buildDifficulty();
+
+
+updateStepDisplay();
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+render();
+
+</script>
+
+</body>
+</html>
