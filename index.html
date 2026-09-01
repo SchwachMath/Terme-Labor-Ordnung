@@ -52,6 +52,9 @@ h1 {
     border-radius: 20px;
     padding: 25px;
     margin-top: 20px;
+
+    overflow: visible;
+    min-width: 0;
 }
 
 
@@ -165,10 +168,9 @@ h1 {
 
 
 /*
-   Die Aufgabe darf umbrechen.
-
-   Der komplette ursprüngliche Ausdruck
-   wird direkt angezeigt.
+   WICHTIG:
+   Keine feste Höhe!
+   Der komplette Term darf umbrechen.
 */
 
 .task {
@@ -184,20 +186,27 @@ h1 {
 
     line-height: 1.5;
 
+    min-height: 82px;
+
+    height: auto;
+
     white-space: normal;
+
+    overflow: visible;
 
     overflow-wrap: anywhere;
 
-    word-break: normal;
+    word-break: break-word;
 
-    min-height: 82px;
+    min-width: 0;
 
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
+    display: block;
 }
+
+
+/* =====================================================
+   SCHRITTTITEL
+===================================================== */
 
 .step-title {
     text-align: center;
@@ -246,6 +255,8 @@ h1 {
     transition: .2s;
 
     position: relative;
+
+    min-width: 0;
 }
 
 .pool-label {
@@ -279,6 +290,8 @@ h1 {
     gap: 15px;
 
     margin-top: 20px;
+
+    min-width: 0;
 }
 
 .drop-zone {
@@ -302,9 +315,9 @@ h1 {
 }
 
 
-/*
-   Die dunkle Hover-Fläche.
-*/
+/* =====================================================
+   SCHWARZER HOVER-EFFEKT
+===================================================== */
 
 .drop-zone::after {
     content: "";
@@ -320,19 +333,9 @@ h1 {
     transition: background .15s;
 }
 
-
-/*
-   HOVER / DRAGOVER
-*/
-
 .drop-zone.drag-over::after {
     background: rgba(0, 0, 0, 0.14);
 }
-
-
-/*
-   Der Inhalt muss über dem Overlay liegen.
-*/
 
 .drop-zone > * {
     position: relative;
@@ -341,7 +344,9 @@ h1 {
 }
 
 
-/* X */
+/* =====================================================
+   BEREICHSFARBEN
+===================================================== */
 
 .zone-x {
     background: #eff6ff;
@@ -349,26 +354,17 @@ h1 {
     border: 2px dashed #60a5fa;
 }
 
-
-/* Y */
-
 .zone-y {
     background: #f0fdf4;
 
     border: 2px dashed #4ade80;
 }
 
-
-/* XY */
-
 .zone-xy {
     background: #faf5ff;
 
     border: 2px dashed #c084fc;
 }
-
-
-/* ZAHLEN */
 
 .zone-num {
     background: #fffbeb;
@@ -472,7 +468,7 @@ h1 {
 
 
 /* =====================================================
-   X = BLAU
+   X
 ===================================================== */
 
 .term.x {
@@ -485,7 +481,7 @@ h1 {
 
 
 /* =====================================================
-   Y = GRÜN
+   Y
 ===================================================== */
 
 .term.y {
@@ -498,7 +494,7 @@ h1 {
 
 
 /* =====================================================
-   XY = LILA
+   XY
 ===================================================== */
 
 .term.xy {
@@ -511,7 +507,7 @@ h1 {
 
 
 /* =====================================================
-   ZAHLEN = GELB
+   ZAHLEN
 ===================================================== */
 
 .term.num {
@@ -565,12 +561,6 @@ h1 {
 .hint.visible {
     display: block;
 }
-
-
-/*
-   Wenn kein Hinweis angezeigt wird,
-   bleibt der Platz trotzdem erhalten.
-*/
 
 .hint.empty {
     visibility: hidden;
@@ -653,7 +643,7 @@ button.secondary {
 
 
 /*
-   Beim Sortieren bleiben die Farben erhalten.
+   Farben bleiben beim Ordnen erhalten.
 */
 
 .order-active .term.x {
@@ -703,6 +693,8 @@ button.secondary {
     font-size: 30px;
 
     font-weight: bold;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -716,6 +708,9 @@ button.secondary {
         font-size: 24px;
 
         min-height: 70px;
+
+        padding:
+            15px 5px;
     }
 
     .drop-zones {
@@ -747,8 +742,7 @@ button.secondary {
     .task {
         font-size: 21px;
 
-        padding:
-            15px 5px;
+        min-height: 60px;
     }
 
 }
@@ -1504,7 +1498,7 @@ variables
 
 
 /* =====================================================
-   TERM DARSTELLUNG
+   POTENZ
 ===================================================== */
 
 function powerText(power) {
@@ -1537,6 +1531,10 @@ return "^" + power;
 
 }
 
+
+/* =====================================================
+   TERM DARSTELLUNG
+===================================================== */
 
 function displayTerm(term) {
 
@@ -1688,7 +1686,7 @@ v.power
 
 
 /* =====================================================
-   PLÄTTCHEN ERSTELLEN
+   PLÄTTCHEN
 ===================================================== */
 
 function createTile(
@@ -1864,11 +1862,8 @@ category
 /*
    Zufällige Reihenfolge.
 
-   Diese Reihenfolge wird EINMAL
-   beim Erstellen der Aufgabe festgelegt.
-
-   Beim Wechsel zu Schritt 3 wird
-   createZones() NICHT erneut aufgerufen.
+   Diese Reihenfolge wird nur beim
+   Erstellen der Aufgabe bestimmt.
 */
 
 shuffle(types)
@@ -1980,7 +1975,7 @@ zone
 
 
 /* =====================================================
-   SORTIER-BEREICH
+   SORTIERBEREICH
 ===================================================== */
 
 function setupZone(zone) {
@@ -2043,11 +2038,9 @@ zone.classList.remove(
 
 
 /*
-   Farbe richtet sich nach dem Bereich.
-
-   Ein falsch zugeordnetes Plättchen
-   erhält dadurch ebenfalls die Farbe
-   des Bereichs.
+   Absichtlich:
+   Das Plättchen nimmt die Farbe
+   des Bereichs an.
 */
 
 setTileColor(
@@ -2191,8 +2184,7 @@ document.getElementById(
 
 
 /*
-   Der graue Bereich bleibt bestehen
-   und bleibt leer.
+   Grauer Bereich bleibt leer.
 */
 
 const pool =
@@ -2204,7 +2196,7 @@ pool.innerHTML = "";
 
 
 /*
-   Hinweis unten.
+   Hinweis.
 */
 
 const hint =
@@ -2438,7 +2430,7 @@ targetTerm.variables
 
 
 /*
-   Exakte Position merken.
+   Position des Zielplättchens behalten.
 */
 
 const parent =
@@ -2639,13 +2631,6 @@ document.getElementById(
 "Ziehe alle Plättchen zurück in den grauen Bereich und ordne sie.";
 
 
-/*
-   Der graue Bereich wird zum
-   Sortierbereich.
-
-   Die Plättchen behalten ihre Farben.
-*/
-
 const pool =
 document.getElementById(
 "pool"
@@ -2669,7 +2654,7 @@ pool.classList.add(
 
 
 /*
-   Hinweisfeld.
+   Sortierregel ins Hinweisfeld.
 */
 
 const hint =
@@ -2787,10 +2772,6 @@ tile !== draggedElement
 );
 
 
-/*
-   Position anhand der Maus bestimmen.
-*/
-
 let inserted =
 false;
 
@@ -2837,7 +2818,7 @@ draggedElement
 
 
 /*
-   Farbe bleibt erhalten.
+   Farbe bleibt erhalten!
 */
 
 clearFeedback();
@@ -3383,37 +3364,17 @@ parseTerm
 
 
 /*
-   =====================================================
-   WICHTIGE ÄNDERUNG
-
-   Die Aufgabenangabe wird NICHT mehr aus
-   den bereits geparsten Plättchen erzeugt.
-
-   Stattdessen wird direkt die ursprüngliche
-   Aufgabenliste verwendet.
-
-   Dadurch bleibt garantiert der komplette
-   Ausdruck sichtbar, z.B.:
-
-   +3x²   −2x   +4xy³   −2y   +x²
-   −3xy   +5y²   −4y²   +8
-   =====================================================
+   Der komplette Ausdruck wird als Text
+   in das Aufgabenfeld geschrieben.
 */
-
-const originalTask =
-levels[difficulty]
-.tasks[taskIndex];
-
 
 document.getElementById(
 "task"
 ).textContent =
-originalTask.join("   ");
+expression(
+originalTerms
+);
 
-
-/*
-   Aufgabennummer
-*/
 
 document.getElementById(
 "taskNumber"
@@ -3488,7 +3449,9 @@ true
 
 
 /*
-   Sortierkästen nur EINMAL erstellen.
+   Sortierkästen.
+
+   Nur hier werden sie neu erzeugt.
 */
 
 createZones();
